@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KI-Brett · Das Duell um Sankt Pixelburg – Ezelero</title>
+<meta name="description" content="Vier Minuten, zwölf Betriebe, eine Konkurrenz, die übers Brett zieht: Analysieren, KI einführen, Betriebe übernehmen, Marktführer werden. Ein Spiel von Ezelero.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://ezelero.com/ki-buero-simulator.html">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Ezelero"><meta property="og:locale" content="de_DE">
+<meta property="og:url" content="https://ezelero.com/ki-buero-simulator.html">
+<meta property="og:title" content="KI-Brett: Werden Sie Marktführer, bevor es die Konkurrenz wird">
+<meta property="og:description" content="Vier Minuten Spiel: Betriebe analysieren, KI einführen, übernehmen, Konkurrenz abhängen. Kostenlos, ohne Anmeldung.">
+<meta property="og:image" content="https://ezelero.com/og-image.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" as="font" type="font/woff2" href="/sora-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/inter-latin.woff2" crossorigin>
+<script>(function(){try{var t=localStorage.getItem('ez_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<style>
+@font-face{font-family:'Sora';font-style:normal;font-weight:300 800;font-display:swap;src:url('/sora-latin.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:300 700;font-display:swap;src:url('/inter-latin.woff2') format('woff2')}
+:root{color-scheme:light;--white:#fff;--gray:#f5f5f7;--ink:#1d1d1f;--ink-2:#555560;--ink-3:#6f6f76;--line:#e5e5ea;--blue:#0071e3;--cyan:#00d4ff;--violet:#a855f7;--grad:linear-gradient(120deg,#00b8e6,#a855f7);--card:#fff;--fh:'Sora',sans-serif;--fb:'Inter',system-ui,sans-serif;--riv:#b0243c}
+[data-theme="dark"]{color-scheme:dark;--white:#0e1014;--gray:#161a21;--ink:#f2f3f6;--ink-2:rgba(255,255,255,.66);--ink-3:rgba(255,255,255,.58);--line:rgba(255,255,255,.12);--card:#191d24}
+@media (prefers-color-scheme:dark){:root:not([data-theme]){color-scheme:dark;--white:#0e1014;--gray:#161a21;--ink:#f2f3f6;--ink-2:rgba(255,255,255,.66);--ink-3:rgba(255,255,255,.58);--line:rgba(255,255,255,.12);--card:#191d24}}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-synthesis:none;-webkit-text-size-adjust:100%;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{font-family:var(--fb);background:var(--gray);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5}
+h1,h2,h3{font-family:var(--fh);letter-spacing:-.02em;line-height:1.15}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.skip{position:absolute;left:-9999px;top:8px;background:#000;color:#fff;padding:10px 16px;border-radius:8px;z-index:200;font-weight:600;text-decoration:none}
+.skip:focus{left:12px;outline:3px solid var(--cyan)}
+nav{background:#000;color:#fff;position:sticky;top:0;z-index:50}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:54px;max-width:1080px;margin:0 auto;padding:0 20px;gap:14px}
+.nav-in img{height:26px;width:auto;display:block}
+.nav-in a.back{color:rgba(255,255,255,.75);text-decoration:none;font-size:14px}
+.nav-in a.back:hover{color:#fff}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+.top{text-align:center;padding:26px 0 12px}
+.top h1{font-size:clamp(26px,4.6vw,42px);font-weight:650;letter-spacing:-.03em}
+.top p{color:var(--ink-2);max-width:640px;margin:8px auto 0;font-size:15.5px}
+.hud{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+.hud div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:9px 12px;text-align:center}
+.hud b{display:block;font-family:var(--fh);font-size:19px;font-weight:700;letter-spacing:-.02em}
+.hud b.neg{color:var(--riv)}
+.hud small{color:var(--ink-3);font-size:12px}
+.hud .you b{color:#0090b3}[data-theme="dark"] .hud .you b{color:#57c7ea}
+.hud .riv b{color:var(--riv)}[data-theme="dark"] .hud .riv b{color:#ff8a9a}
+.bar{height:12px;border-radius:99px;background:#e9c9cf;overflow:hidden;margin:4px 0 12px;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:var(--grad);width:50%;transition:width .4s}
+.barl{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-2)}
+.game{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
+.stage{position:relative;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(30,20,60,.08)}
+canvas{width:100%;height:auto;display:block;cursor:pointer}
+.ctrl{position:absolute;left:10px;bottom:8px;font-size:11.5px;color:var(--ink-3);background:var(--card);border:1px solid var(--line);border-radius:99px;padding:4px 10px;pointer-events:none}
+canvas:focus-visible{outline:3px solid var(--cyan);outline-offset:-3px}
+@media (max-width:860px){.ctrl{display:none}}
+.bubble{position:absolute;left:50%;top:14px;transform:translate(-50%,-6px);max-width:320px;background:#fff;color:#1d1d1f;border:2px solid var(--riv);border-radius:14px;padding:8px 12px;font-size:13px;font-weight:500;opacity:0;transition:.3s;pointer-events:none;text-align:center}
+.bubble.show{opacity:1;transform:translate(-50%,0)}
+.side{display:flex;flex-direction:column;gap:12px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 16px 14px}
+.panel h3{font-size:17px;font-weight:650}
+.panel .meta{font-size:12.5px;color:var(--ink-3);margin-top:2px}
+.panel p{color:var(--ink-2);font-size:14px;margin-top:6px}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--fb);font-size:14.5px;font-weight:600;padding:11px 16px;border-radius:99px;border:0;cursor:pointer;background:var(--blue);color:#fff;text-decoration:none;min-height:44px;transition:transform .15s,background .2s,opacity .2s}
+.btn:hover{background:#0a7cf0}.btn:active{transform:scale(.97)}
+.btn:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.sec{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.sec:hover{background:rgba(0,0,0,.04)}[data-theme="dark"] .btn.sec:hover{background:rgba(255,255,255,.06)}
+.btn.grad{background:var(--grad)}
+.hint{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.list{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px;max-height:380px;overflow:auto}
+.fld{display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;width:100%;text-align:left;background:transparent;border:2px solid transparent;border-radius:12px;padding:7px 8px;font:inherit;color:inherit;cursor:pointer}
+.fld:hover{background:var(--gray)}
+.fld:focus-visible{outline:3px solid var(--cyan)}
+.fld.sel{border-color:var(--violet)}
+.fld .ic{font-size:18px;text-align:center}
+.fld .nm{font-weight:600;font-size:13px;line-height:1.2}
+.fld .st{font-size:11.5px;color:var(--ink-3)}
+.fld .tag{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:99px;background:#eef0f4;color:var(--ink-2);white-space:nowrap}
+[data-theme="dark"] .fld .tag{background:#2a303c}
+.fld.you .tag{background:var(--grad);color:#fff}.fld.riv .tag{background:var(--riv);color:#fff}
+.trophies{display:flex;gap:6px;flex-wrap:wrap}
+.tro{width:34px;height:34px;border-radius:50%;background:var(--gray);border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:16px;opacity:.35;filter:grayscale(1)}
+.tro.on{opacity:1;filter:none;background:var(--card);box-shadow:0 0 0 2px var(--violet)}
+.ov{position:fixed;inset:0;background:rgba(10,12,18,.62);display:flex;align-items:center;justify-content:center;padding:16px;z-index:100;opacity:0;pointer-events:none;transition:opacity .25s;overflow:auto}
+.ov.show{opacity:1;pointer-events:auto}
+.card{background:var(--card);color:var(--ink);border-radius:22px;padding:24px 22px;max-width:540px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,.35);border:1px solid var(--line);margin:auto}
+.card h2{font-size:clamp(21px,4vw,28px);font-weight:700}
+.card p{color:var(--ink-2);margin-top:8px;font-size:15px}
+.card .opts{display:grid;gap:10px;margin-top:16px}
+.opt{text-align:left;background:var(--gray);border:2px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;font:inherit;color:inherit;transition:border-color .2s,transform .15s}
+.opt:hover{border-color:var(--violet);transform:translateY(-1px)}
+.opt:focus-visible{outline:3px solid var(--cyan)}
+.opt b{display:block;font-size:15px}.opt span{font-size:13px;color:var(--ink-3)}
+.opt[disabled]{opacity:.5;cursor:not-allowed}
+.ctag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--riv);margin-bottom:8px}
+.ctag.blue{color:#0090b3}[data-theme="dark"] .ctag{color:#ff8a9a}[data-theme="dark"] .ctag.blue{color:#57c7ea}
+.res{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.res div{background:var(--gray);border-radius:14px;padding:12px;text-align:center}
+.res b{display:block;font-family:var(--fh);font-size:24px;font-weight:700}
+.res small{color:var(--ink-3);font-size:12px}
+.title{font-family:var(--fh);font-size:19px;font-weight:700;margin-top:14px;text-align:center}
+label{display:block;font-size:14px;color:var(--ink-2);margin:14px 0 6px}
+input{width:100%;font:inherit;font-size:16px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--gray);color:var(--ink)}
+input:focus{outline:3px solid rgba(0,212,255,.5);border-color:var(--cyan)}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.pill{font:inherit;font-size:13.5px;font-weight:600;padding:9px 14px;border-radius:99px;border:1.5px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.pill.on{background:var(--grad);color:#fff;border-color:transparent}
+.pill:focus-visible{outline:3px solid var(--cyan)}
+.cd{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:12px}
+.cd i{display:block;height:100%;background:var(--riv);width:100%;transition:width .1s linear}
+/* 3D-Spielkarte */
+#dim{position:fixed;inset:0;background:rgba(10,12,18,.55);z-index:105;opacity:0;pointer-events:none;transition:opacity .4s}
+#dim.show{opacity:1;pointer-events:auto}
+#bigcard{position:fixed;z-index:110;perspective:1400px;pointer-events:none;transition:left .75s cubic-bezier(.2,.8,.2,1),top .75s cubic-bezier(.2,.8,.2,1),width .75s cubic-bezier(.2,.8,.2,1),height .75s cubic-bezier(.2,.8,.2,1)}
+#bigcard.open{pointer-events:auto}
+#bigcard .c3d{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.2,.8,.2,1);transform:rotateY(0) translateZ(0)}
+#bigcard.open .c3d{transform:rotateY(180deg) translateZ(40px)}
+#bigcard .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+#bigcard .back{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-family:var(--fh);border:3px solid rgba(255,255,255,.35)}
+#bigcard .back b{font-size:clamp(11px,4vw,26px);letter-spacing:.06em}
+#bigcard .back span{font-size:clamp(7px,2vw,12px);opacity:.85}
+#bigcard .back.ev{background:linear-gradient(135deg,#a855f7,#6d28d9)}
+#bigcard .back.mk{background:linear-gradient(135deg,#00b8e6,#0077b6)}
+#bigcard .front{transform:rotateY(180deg);background:var(--card);color:var(--ink);padding:22px 20px;overflow:auto;border:1px solid var(--line)}
+#bigcard .front h2{font-size:clamp(19px,3.6vw,26px);font-weight:700}
+#bigcard .front p{color:var(--ink-2);font-size:14.5px;margin-top:8px}
+#bigcard .front .opts{display:grid;gap:8px;margin-top:14px}
+#bigcard .front .opt{padding:10px 12px}
+#bigcard .front .opt b{font-size:14px}#bigcard .front .opt span{font-size:12.5px}
+.deckbtns{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.deckbtns .btn{font-size:13px;padding:8px 12px;min-height:38px}
+.deckbtns .btn.ev{background:linear-gradient(135deg,#a855f7,#6d28d9)}.deckbtns .btn.mk{background:linear-gradient(135deg,#00b8e6,#0077b6)}
+@media (prefers-reduced-motion:reduce){#bigcard,#bigcard .c3d{transition:none!important}}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#1d1d1f;color:#fff;padding:10px 16px;border-radius:99px;font-size:14px;font-weight:500;opacity:0;transition:.25s;z-index:120;max-width:92vw;text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%)}
+footer{background:#000;color:rgba(255,255,255,.7);text-align:center;padding:40px 16px;margin-top:40px;font-size:14px}
+footer img{height:30px;width:auto;margin:0 auto 14px;display:block}
+footer a{color:#fff}
+@media (max-width:860px){.game{grid-template-columns:1fr}.hud{grid-template-columns:repeat(2,1fr)}.top{padding:20px 0 8px}.list{max-height:260px}
+ .panel{position:sticky;bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:5;box-shadow:0 -10px 30px rgba(20,10,40,.14)}.panel .hint{display:none}.side{display:contents}.list{order:1}.panel{order:2}.trobox{order:0}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Zum Spiel springen</a>
+<nav aria-label="Navigation"><div class="nav-in"><a href="index.html" aria-label="Zur Startseite"><img src="/ezelero-logo.webp" width="320" height="96" alt="Ezelero"></a><a class="back" href="index.html">← Zurück zur Startseite</a></div></nav>
+
+<main id="main" class="wrap" tabindex="-1">
+  <div class="top">
+    <h1>Das <span class="grad">KI-Brett</span> von Sankt Pixelburg</h1>
+    <p>Vier Minuten. Zwölf Betriebe. Eine Konkurrenz, die übers Brett zieht und kauft, worauf sie tritt. Zwei Kartenstapel in der Mitte – wer sie zieht, muss entscheiden. Wer am Ende mehr besitzt, ist Marktführer.</p>
+  </div>
+
+  <div class="hud">
+    <div><b id="money">2.000 €</b><small>Kontostand</small></div>
+    <div><b id="inc">0 €/s</b><small>Einkommen</small></div>
+    <div class="you"><b id="cntYou">0</b><small>Übernommen</small></div>
+    <div class="riv"><b id="cntRiv">0</b><small>Konkurrenz hat</small></div>
+  </div>
+  <div class="barl"><span>Marktanteil <b id="shareYou">50 %</b></span><span id="timer">4:00</span><span>Konkurrenz <b id="shareRiv">50 %</b></span></div>
+  <div class="bar" aria-hidden="true"><i id="shareBar"></i></div>
+
+  <div class="game">
+    <div class="stage">
+      <canvas id="cv" width="800" height="800" tabindex="0" aria-label="Spielbrett mit sechzehn Feldern. Der Chef folgt der Maus oder den Pfeiltasten; das Feld unter ihm ist ausgewählt."></canvas>
+      <div class="ctrl" aria-hidden="true">🖱️ Maus oder ⬅️⬆️⬇️➡️ Pfeiltasten · Der Chef wählt das Feld, auf dem er steht</div>
+      <div class="bubble" id="bubble" aria-live="polite"></div>
+    </div>
+    <div class="side">
+      <div class="panel trobox"><div class="meta">Trophäen</div><div class="trophies" id="trophies"></div><div class="deckbtns"><button type="button" class="btn ev" id="btnEv">🃏 Ereigniskarte</button><button type="button" class="btn mk" id="btnMk">📈 Marktkarte</button></div></div>
+      <div class="list" id="list" role="group" aria-label="Felder des Bretts"></div>
+      <div class="panel" id="panel">
+        <h3 id="pTitle">Wählen Sie ein Feld</h3>
+        <div class="meta" id="pMeta"></div>
+        <p id="pText">Beginnen Sie mit Ihrem eigenen Betrieb: KI einführen, Einkommen steigern, dann analysieren und übernehmen.</p>
+        <div class="acts" id="pActs"></div>
+        <div class="hint" id="abend"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="toast" aria-live="polite"></div>
+<div id="dim"></div>
+<div id="bigcard" hidden role="dialog" aria-modal="true" aria-labelledby="bcTitle"><div class="c3d"><div class="face back ev"><b>EREIGNIS</b><span>Sankt Pixelburg</span></div><div class="face front"><span class="ctag" id="bcTag">Ereignis</span><h2 id="bcTitle"></h2><p id="bcText"></p><div class="opts" id="bcOpts"></div></div></div></div>
+
+<div class="ov show" id="ovStart" role="dialog" aria-modal="true" aria-labelledby="stTitle">
+  <div class="card">
+    <h2 id="stTitle">Ihr Betrieb. Ihr Brett. <span class="grad">Ihre Konkurrenz.</span></h2>
+    <p>Jeder Betrieb hat ein verborgenes KI-Potenzial – eine Erstanalyse deckt es auf. Die Konkurrenz zieht Feld für Feld übers Brett und kauft, worauf sie tritt. Und Ihre Teams haben eine Stress-Anzeige: Ein Betrieb ohne KI wächst nur so lange, bis die erste Fachkraft kündigt.</p>
+    <label for="name">Wie heißen Sie, Chef?</label>
+    <input id="name" maxlength="18" placeholder="Ihr Name" autocomplete="off">
+    <label>Ihre Konkurrenz</label>
+    <div class="pills" id="rivPills"><button type="button" class="pill" data-r="0">Der Zögerer</button><button type="button" class="pill on" data-r="1">Der Kopierer</button><button type="button" class="pill" data-r="2">Der Hai</button></div>
+    <div class="hint" id="rivDesc">Zieht in normalem Tempo. Jedes Mal, wenn Sie kaufen, bekommt er Auftrieb.</div>
+    <div class="acts"><button class="btn grad" id="btnStart" type="button">Brett betreten →</button></div>
+    <div class="hint">Zahlen im Spiel sind illustrativ. Kein Konto, keine Anmeldung, nichts wird gesendet.</div>
+  </div>
+</div>
+
+<div class="ov" id="ovEv" role="dialog" aria-modal="true" aria-labelledby="evTitle">
+  <div class="card"><span class="ctag" id="evTag">Ereignis</span><h2 id="evTitle"></h2><p id="evText"></p><div class="opts" id="evOpts"></div><div class="cd" id="evCd" hidden><i id="evCdI"></i></div></div>
+</div>
+
+<div class="ov" id="ovEnd" role="dialog" aria-modal="true" aria-labelledby="endTitle">
+  <div class="card">
+    <span class="ctag" id="endTag">Abrechnung</span>
+    <h2 id="endTitle"></h2>
+    <p id="endText"></p>
+    <div class="res">
+      <div><b id="rYou">0</b><small>Übernommen</small></div>
+      <div><b id="rRiv">0</b><small>Konkurrenz</small></div>
+      <div><b id="rInc">0 €/s</b><small>Ihr Einkommen am Ende</small></div>
+      <div><b id="rQuit">0</b><small>Kündigungen</small></div>
+      <div><b id="rTro">0/6</b><small>Trophäen</small></div>
+    </div>
+    <div class="title"><span class="grad" id="rTitle"></span></div>
+    <p id="rBest" style="text-align:center;font-size:13px"></p>
+    <p style="margin-top:14px;text-align:center">Im Spiel dauert das vier Minuten. In echt beginnt es mit einer Erstanalyse – Ihrer.</p>
+    <div class="acts" style="justify-content:center">
+      <a class="btn grad" id="ctaEnd" href="https://calendly.com/ezelero/diagnostico-gratis" target="_blank" rel="noopener">45 Minuten mit dem Gründer buchen</a>
+      <button class="btn sec" id="btnCopy" type="button">Ergebnis kopieren</button>
+      <button class="btn sec" id="btnAgain" type="button">Nochmal</button>
+    </div>
+  </div>
+</div>
+
+<footer><div class="wrap"><img src="/ezelero-logo.webp" width="320" height="96" alt="Ezelero" loading="lazy"><p>Ein Spiel von Ezelero · <a href="index.html">Zur Startseite</a> · <a href="https://calendly.com/ezelero/diagnostico-gratis" target="_blank" rel="noopener">45 Minuten mit dem Gründer buchen</a></p></div></footer>
+
+<script>
+(function(){
+'use strict';
+var $=function(id){return document.getElementById(id);};
+var fmt=function(n){return Math.round(n).toLocaleString('de-DE')+' €';};
+var toastT;function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('show');},2800);}
+var SPEED=Math.min(10,Math.max(1,+(new URLSearchParams(location.search).get('tempo'))||1));
+
+/* ---------- Brett: 16 Felder, 0 unten links, im Uhrzeigersinn ---------- */
+var BRANCHE=null;try{BRANCHE=localStorage.getItem('ez_branche');}catch(e){}
+var HQNAME={handwerk:'Ihr Handwerksbetrieb',handel:'Ihr Geschäft',dienstleister:'Ihr Dienstleistungsbetrieb',gastro:'Ihr Gastronomiebetrieb',gesundheit:'Ihre Praxis'}[BRANCHE]||'Ihr Betrieb';
+var G={alt:{n:'Altstadt',c:'#c0392b'},bhf:{n:'Bahnhofsviertel',c:'#2e7dd7'},gew:{n:'Gewerbegebiet',c:'#c98a1b'},kur:{n:'Kurpromenade',c:'#1e8f85'}};
+var F=[
+ {k:'hq',n:HQNAME,ic:'🏢',base:10},
+ {k:'b',n:'Bäckerei Pircher',ic:'🥖',base:3,price:900,g:'alt'},
+ {k:'b',n:'Gasthof Alpenrose',ic:'🍽️',base:5,price:1500,g:'alt',ab:'nachbar'},
+ {k:'b',n:'Metzgerei Hofer',ic:'🥩',base:4,price:1200,g:'alt'},
+ {k:'bank',n:'Kreditbank',ic:'🏦'},
+ {k:'b',n:'Elektro Huber',ic:'🔌',base:4,price:1300,g:'bhf',ab:'ki'},
+ {k:'b',n:'Fahrschule Blitz',ic:'🚗',base:3,price:1000,g:'bhf'},
+ {k:'b',n:'Fahrradladen Rad & Tat',ic:'🚲',base:3,price:1000,g:'bhf'},
+ {k:'riv',n:'Konkurrenz GmbH',ic:'🏭',base:8},
+ {k:'b',n:'Tischlerei Gruber',ic:'🪚',base:4,price:1400,g:'gew'},
+ {k:'b',n:'Autohaus Lanz',ic:'🚙',base:6,price:2200,g:'gew'},
+ {k:'b',n:'Baufirma Stocker',ic:'🏗️',base:6,price:2400,g:'gew'},
+ {k:'amt',n:'Rathaus',ic:'🏛️'},
+ {k:'b',n:'Steuerkanzlei Mair',ic:'📊',base:5,price:2000,g:'kur',ab:'preis'},
+ {k:'b',n:'Immobilien Südblick',ic:'🏠',base:6,price:2600,g:'kur',ab:'blick'},
+ {k:'b',n:'Hotel Bergblick',ic:'🏨',base:7,price:3000,g:'kur'}
+];
+var N=F.length,YOU=0,RIV=8,BANK=4,AMT=12;
+var ABTXT={nachbar:'Stärkt die Nachbarn links und rechts um 15 %',ki:'KI-Einführung überall 25 % günstiger',preis:'Alle Kaufpreise 10 % günstiger',blick:'Zeigt, wohin die Konkurrenz als Nächstes zieht'};
+var RIVS=[{n:'Der Zögerer',d:'Zieht langsam, hat wenig Geld. Gut zum Lernen.',step:8.5,rate:7,money:900},
+ {n:'Der Kopierer',d:'Zieht in normalem Tempo. Jedes Mal, wenn Sie kaufen, bekommt er Auftrieb.',step:6.2,rate:9,money:1100},
+ {n:'Der Hai',d:'Schnell, reich, gnadenlos. Nur mit Analyse und Straßenzug zu schlagen.',step:4.6,rate:12,money:1600}];
+var KICOST=[400,700,1100],KICOST2=[250,450,700];
+var S;
+function reset(rivType){var R=RIVS[rivType];
+ S={rt:rivType,money:2000,t:240,ki:[],own:[],mult:[],pot:[],known:[],rivMoney:R.money,rivRate:R.rate,rivStep:R.step,rivPos:RIV,rivFrom:RIV,rivProg:1,nextMove:6,nextEv:30,evIdx:0,staff:0,lost:0,paused:true,over:false,sel:0,name:'Chef',clicks:0,rivKI:0,taunted:0,result:'',loan:0,loanRate:0,grant:false,analyzing:null,tro:{},custs:[],coins:[],hero:{x:60,y:735,tx:60,ty:735,dir:1,ph:0,mv:false,fld:0},rivDir:1,rivPh:0,deck:{ev:[],mk:[]},cd:{ev:6,mk:20},idle:{ev:0,mk:0},cardOpen:false,duels:0,duelsWon:0,loanUsed:false,bank:0};
+ var pots=[0.7,0.7,0.7,0.7,1,1,1,1,1.6,1.6,1.6,1.6].sort(function(){return Math.random()-0.5;}),pi=0;
+ S.stress=[];S.quit=0;S.qa=[];for(var i=0;i<N;i++){S.ki[i]=0;S.own[i]=null;S.mult[i]=1;S.known[i]=false;S.pot[i]=F[i].k==='b'?pots[pi++]:1;S.stress[i]=0;S.qa[i]=0;}S.stress[YOU]=35;
+ S.own[YOU]='you';S.own[RIV]='riv';S.known[YOU]=true;}
+reset(1);
+
+/* ---------- Ökonomie ---------- */
+function hasAb(ab){for(var i=0;i<N;i++)if(F[i].ab===ab&&S.own[i]==='you')return true;return false;}
+function groupBonus(i){var g=F[i].g;if(!g)return 1;for(var j=0;j<N;j++)if(F[j].g===g&&S.own[j]!=='you')return 1;return 1.3;}
+function neighborBonus(i){if(F[i].k!=='b')return 1;var b=1;[i-1,i+1].forEach(function(j){if(j>=0&&j<N&&F[j].ab==='nachbar'&&S.own[j]==='you')b*=1.15;});return b;}
+function incomeOf(i){if(S.own[i]!=='you')return 0;return F[i].base*(0.4+1.0*S.ki[i])*S.pot[i]*S.mult[i]*groupBonus(i)*neighborBonus(i);}
+function income(){var s=0;for(var i=0;i<N;i++)s+=incomeOf(i);return s;}
+function cnt(w){var c=0;for(var i=0;i<N;i++)if(S.own[i]===w&&F[i].k==='b')c++;return c;}
+function priceOf(i){var base=F[i].price*(1+0.10*cnt('you'));if(hasAb('preis'))base*=0.9;if(S.rabatt)base*=0.8;if(S.own[i]==='riv')base*=2;return Math.round(base/50)*50;}
+function kiCost(i){var c=(i===YOU?KICOST:KICOST2)[S.ki[i]];if(hasAb('ki'))c*=0.75;return Math.round(c/10)*10;}
+function share(){var y=cnt('you')+1,r=cnt('riv')+1;return Math.round(100*y/(y+r));}
+function totalKI(){var k=0;for(var i=0;i<N;i++)if(S.own[i]==='you')k+=S.ki[i];return k;}
+function feierabend(){var m=21*60+40-8*totalKI();if(m<17*60+30)m=17*60+30;return (Math.floor(m/60))+':'+('0'+(m%60)).slice(-2);}
+function stressTxt(i){var s=S.stress[i];if(S.qa[i]>=2&&s>=100)return ' · 🪫 Nur noch der Chef arbeitet';return s>=75?' · 🔥 Team am Limit':s>=45?' · 😓 Team unter Druck':' · 🙂 Team entspannt';}
+function stars(i){if(!S.known[i])return '?';var p=S.pot[i];return p>1.3?'★★★':p>0.9?'★★☆':'★☆☆';}
+var TRO=[{id:'analyse',ic:'🔍',n:'Weitsicht – erste Erstanalyse'},{id:'zug',ic:'🏘️',n:'Straßenzug – ein Viertel komplett'},{id:'duell',ic:'⚔️',n:'Bieter-Duell gewonnen'},{id:'staff',ic:'🤝',n:'Alle Mitarbeiter gehalten'},{id:'ohnekredit',ic:'💶',n:'Sieg ohne Kredit'},{id:'markt',ic:'👑',n:'Marktführer'}];
+function trophy(id){if(S.tro[id])return;S.tro[id]=true;var t=TRO.filter(function(x){return x.id===id;})[0];toast('🏆 Trophäe: '+t.n);renderTro();}
+function renderTro(){var box=$('trophies');if(!box.children.length)TRO.forEach(function(t){var d=document.createElement('span');d.className='tro';d.textContent=t.ic;d.title=t.n;d.setAttribute('aria-label',t.n);box.appendChild(d);});TRO.forEach(function(t,k){box.children[k].classList.toggle('on',!!S.tro[t.id]);});}
+function troCount(){var c=0;TRO.forEach(function(t){if(S.tro[t.id])c++;});return c;}
+
+/* ---------- UI ---------- */
+function updUI(){
+ var mb=$('money');mb.textContent=fmt(S.money);mb.classList.toggle('neg',S.money<0);
+ $('inc').textContent=income().toFixed(1).replace('.',',')+' €/s'+(S.loan>0?' (Kredit läuft)':'');
+ $('cntYou').textContent=cnt('you');$('cntRiv').textContent=cnt('riv');
+ var sh=share();$('shareYou').textContent=sh+' %';$('shareRiv').textContent=(100-sh)+' %';$('shareBar').style.width=sh+'%';
+ var m=Math.floor(Math.max(0,S.t)/60),s=Math.floor(Math.max(0,S.t)%60);$('timer').textContent=m+':'+('0'+s).slice(-2);
+ $('abend').textContent='Feierabend heute: '+feierabend()+' Uhr';
+ renderList();renderPanel();renderTro();
+}
+function renderList(){
+ var L=$('list');
+ if(!L.children.length){for(var i=0;i<N;i++){var b=document.createElement('button');b.type='button';b.className='fld';b.setAttribute('data-i',i);b.innerHTML='<span class="ic"></span><span><div class="nm"></div><div class="st"></div></span><span class="tag"></span>';L.appendChild(b);}
+  L.addEventListener('click',function(e){var t=e.target.closest('[data-i]');if(t){S.sel=+t.getAttribute('data-i');updUI();}});}
+ for(var j=0;j<N;j++){var el=L.children[j],f=F[j],own=S.own[j];el.className='fld'+(own==='you'?' you':own==='riv'?' riv':'')+(S.sel===j?' sel':'');
+  el.querySelector('.ic').textContent=f.ic;el.querySelector('.nm').textContent=f.n;
+  var tag=el.querySelector('.tag'),st='';
+  if(f.k==='b'){if(own==='you'){tag.textContent='KI '+S.ki[j]+'/3';st=incomeOf(j).toFixed(1).replace('.',',')+' €/s · '+stars(j)+stressTxt(j);}else if(own==='riv'){tag.textContent='Konkurrenz';st='Rückkauf '+fmt(priceOf(j))+' · '+stars(j);}else{tag.textContent=G[f.g].n;st=fmt(priceOf(j))+' · Potenzial '+stars(j);}}
+  else if(f.k==='hq'){tag.textContent='KI '+S.ki[j]+'/3';st=incomeOf(j).toFixed(1).replace('.',',')+' €/s'+stressTxt(j);}
+  else if(f.k==='riv'){tag.textContent='KI '+S.rivKI;st='Der Gegner';}
+  else if(f.k==='bank'){tag.textContent='Kredit';st=S.loan>0?('Restschuld '+fmt(S.loan)):'2.000 € sofort';}
+  else{tag.textContent='Förderung';st=S.grant?'Landesbeitrag erhalten':'Landesbeitrag Digitalisierung';}
+  el.querySelector('.st').textContent=st;el.setAttribute('aria-pressed',S.sel===j?'true':'false');}
+}
+function renderPanel(){
+ var i=S.sel,f=F[i],acts=$('pActs');acts.innerHTML='';$('pMeta').textContent='';
+ var mk=function(txt,fn,dis,cls){var x=document.createElement('button');x.type='button';x.className='btn'+(cls?' '+cls:'');x.textContent=txt;x.disabled=!!dis;x.addEventListener('click',fn);acts.appendChild(x);return x;};
+ if(f.k==='riv'){$('pTitle').textContent=RIVS[S.rt].n+' – Konkurrenz GmbH';$('pText').textContent=RIVS[S.rt].d+' KI-Stufe: '+S.rivKI+'. Kasse: etwa '+fmt(S.rivMoney)+'.';return;}
+ if(f.k==='bank'){$('pTitle').textContent='Kreditbank';$('pText').textContent=S.loan>0?('Restschuld '+fmt(S.loan)+', wird laufend vom Konto abgebucht.'):'Kredit: 2.000 € sofort, 2.600 € über sechzig Sekunden zurück. Wer damit KI einführt, gewinnt viel. Wer damit nur kauft, erstickt an den Raten.';
+  mk('Kredit aufnehmen · 2.000 €',function(){S.money+=2000;S.loan=2600;S.loanRate=2600/60;S.loanUsed=true;toast('💶 Kredit ausgezahlt. Rückzahlung läuft.');updUI();},S.loan>0,'grad');return;}
+ if(f.k==='amt'){$('pTitle').textContent='Rathaus';$('pText').textContent=S.grant?'Der Landesbeitrag Digitalisierung wurde bereits ausgezahlt.':'Landesbeitrag Digitalisierung: 600 € Zuschuss, sobald Sie in Ihren Betrieben mindestens drei KI-Stufen eingeführt haben.';
+  mk('Antrag stellen · +600 €',function(){S.grant=true;S.money+=600;toast('🏛️ Landesbeitrag bewilligt: +600 €');updUI();},S.grant||totalKI()<3,'grad');return;}
+ var own=S.own[i];
+ if(own==='you'){
+  $('pTitle').textContent=f.n+(i===YOU?' (Stammbetrieb)':'');
+  $('pMeta').textContent=(f.g?G[f.g].n+' · ':'')+(f.k==='b'?'Potenzial '+stars(i)+' · ':'')+(f.ab?ABTXT[f.ab]:'');
+  var k=S.ki[i];
+  $('pText').textContent=(S.stress[i]>=75?'Das Team ist am Limit – ohne KI kündigt bald jemand. ':S.stress[i]>=45?'Das Team steht unter Druck. ':'')+(k<3?('KI-Stufe '+k+' von 3. Nächste Stufe: '+['Kundenanfragen automatisch beantworten','Angebote in Minuten statt Tagen','Termine, Bestellungen und Reporting ohne Zutun'][k]+'.'):'Voll ausgebaut. Dieser Betrieb arbeitet für Sie.'+(groupBonus(i)>1?' Straßenzug-Bonus aktiv.':''));
+  if(k<3){var c=kiCost(i);mk('KI einführen · '+fmt(c),function(){if(S.money<c)return;S.money-=c;S.ki[i]++;toast('🤖 '+f.n+': KI-Stufe '+S.ki[i]+' – Belegschaft bleibt, Zeit kommt zurück');updUI();},S.money<c,'grad');}
+  if(i===YOU)mk('Selbst ans Telefon (+8 €)',function(){S.money+=8;S.clicks++;if(S.clicks===25)toast('Das geht auch anders: KI einführen, dann klingelt es ohne Sie.');updUI();},false,'sec');
+ }else{
+  var p=priceOf(i);
+  $('pTitle').textContent=f.n+(own==='riv'?' – gehört der Konkurrenz':' – ohne KI');
+  $('pMeta').textContent=G[f.g].n+' · Potenzial '+stars(i)+(f.ab?' · '+ABTXT[f.ab]:'');
+  $('pText').textContent=S.known[i]?(S.pot[i]>1.3?'Die Analyse zeigt: eine Goldgrube. Mit KI mehr als das Fünffache.':S.pot[i]>0.9?'Solider Betrieb, normales Potenzial.':'Die Analyse zeigt: wenig Potenzial. Nur kaufen, wenn es den Straßenzug vollmacht.'):'Potenzial unbekannt. Wer blind kauft, kauft oft falsch. Eine Erstanalyse kostet 100 € und vier Sekunden.';
+  if(!S.known[i])mk('Erstanalyse · 100 €',function(){if(S.money<100||S.analyzing)return;S.money-=100;S.analyzing={i:i,t:4};toast('🔍 Analyse läuft bei '+f.n);updUI();},S.money<100||!!S.analyzing,'sec');
+  mk((own==='riv'?'Zurückkaufen · ':'Übernehmen · ')+fmt(p),function(){buy(i,p);},S.money<p,'grad');
+ }
+}
+function buy(i,p,silent){if(S.money<p||S.over)return;S.money-=p;S.rabatt=false;var was=S.own[i];S.own[i]='you';S.ki[i]=0;S.known[i]=true;S.sel=i;S.stress[i]=45;
+ if(S.rt===1)S.rivMoney+=300;
+ if(!silent)toast((was==='riv'?'↩️ Zurückgeholt: ':'🤝 Übernommen: ')+F[i].n+' – Belegschaft bleibt, KI kommt dazu');
+ if(groupBonus(i)>1){trophy('zug');toast('🏘️ Straßenzug '+G[F[i].g].n+' komplett: +30 % Einkommen dort');}
+ updUI();check();}
+
+/* ---------- Konkurrenz zieht übers Brett ---------- */
+var TAUNT=['Wir antworten in zwei Minuten. Und Sie?','Die Bäckerei war ein Schnäppchen. Danke.','Ihre Leute rufen noch zurück? Süß.','Noch drei Betriebe, dann gehört uns das Brett.','Zettelwirtschaft ist auch eine Strategie. Eine langsame.'];
+function bubble(m){var b=$('bubble');b.textContent=m;b.classList.add('show');setTimeout(function(){b.classList.remove('show');},4200);}
+function nextPos(p){return (p+1)%N;}
+function rivalLand(i){var f=F[i];
+ if(f.k==='riv'){S.rivMoney+=300;return;}
+ if(f.k==='b'&&!S.own[i]){var p=F[i].price;
+  if(S.rivMoney>=p){if(S.money>=priceOf(i)&&!S.over){duel(i);}else{S.rivMoney-=p;S.own[i]='riv';S.known[i]=true;toast('🏭 Die Konkurrenz hat '+f.n+' übernommen');if(cnt('riv')>cnt('you'))bubble(TAUNT[S.taunted++%TAUNT.length]);updUI();check();}}
+  return;}
+ if(f.k==='b'&&S.own[i]==='you'&&S.ki[i]===0&&Math.random()<0.5){offerEvent(i);}
+}
+function rivalPhase(){
+ if(S.t<=180&&S.rivKI<1){S.rivKI=1;S.rivRate+=6;S.rivStep*=0.85;bubble('Wir haben jetzt einen Telefon-Assistenten. Jede Anfrage in Sekunden.');toast('⚠️ Die Konkurrenz führt KI ein – sie zieht schneller');}
+ if(S.t<=110&&S.rivKI<2){S.rivKI=2;S.rivRate+=8;S.rivStep*=0.85;bubble('Angebote schreiben wir jetzt in zehn Minuten.');toast('⚠️ Konkurrenz: KI-Stufe 2 – das Tempo steigt');}
+}
+/* Bieter-Duell */
+function duel(i){S.paused=true;S.duels++;var f=F[i],riv=F[i].price,my=riv,rounds=0,left=5;
+ $('evTag').textContent='Bieter-Duell';$('evTag').className='ctag blue';$('evTitle').textContent=f.n;
+ var o=$('evOpts');o.innerHTML='';var cd=$('evCd');cd.hidden=false;
+ function render(){$('evText').textContent='Die Konkurrenz steht auf dem Feld und bietet '+fmt(riv)+'. Ihr Gebot: '+fmt(my)+'. Wer mehr bietet, bekommt den Betrieb.';o.innerHTML='';
+  var b1=document.createElement('button');b1.type='button';b1.className='opt';b1.innerHTML='<b></b><span></span>';b1.querySelector('b').textContent='Überbieten · '+fmt(my+250);b1.querySelector('span').textContent=S.money>=my+250?'Sie legen 250 € drauf (höchstens zweimal)':'🔒 Nicht genug Geld';b1.disabled=S.money<my+250||rounds>=2;
+  b1.addEventListener('click',function(){my+=250;rounds++;left=5;if(S.rivMoney>=riv+250&&Math.random()<0.7){riv+=250;render();toast('Die Konkurrenz hält dagegen.');}else{finish(true);}});
+  var b2=document.createElement('button');b2.type='button';b2.className='opt';b2.innerHTML='<b></b><span></span>';b2.querySelector('b').textContent=my>riv?'Zuschlag nehmen · '+fmt(my):'Aussteigen';b2.querySelector('span').textContent=my>riv?'Ihr Gebot liegt vorne':'Die Konkurrenz bekommt den Betrieb';
+  b2.addEventListener('click',function(){finish(my>riv);});o.appendChild(b1);o.appendChild(b2);}
+ var iv=setInterval(function(){left-=0.1;$('evCdI').style.width=Math.max(0,left/5*100)+'%';if(left<=0){clearInterval(iv);toast('Zu langsam – die Konkurrenz bekommt den Zuschlag.');finish(false);}},100);
+ function finish(win){clearInterval(iv);cd.hidden=true;$('ovEv').classList.remove('show');$('evTag').className='ctag';S.paused=false;
+  if(win){S.money-=my;S.own[i]='you';S.ki[i]=0;S.known[i]=true;S.sel=i;S.duelsWon++;trophy('duell');toast('⚔️ Duell gewonnen: '+f.n+' ist Ihrer');}
+  else{S.rivMoney-=riv;S.own[i]='riv';S.known[i]=true;toast('🏭 Die Konkurrenz bekommt '+f.n);bubble('Danke fürs Mitbieten. Hat den Preis für uns erhöht.');}
+  updUI();check();}
+ render();$('ovEv').classList.add('show');}
+
+/* ---------- Karten ---------- */
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function st(d){S.stress[YOU]=Math.max(0,Math.min(100,S.stress[YOU]+d));}
+var EV=[
+ {t:'Freitag, 16:30 Uhr',x:'Ein Großkunde will das Angebot bis Montag früh. Ihr Team ist im Feierabend.',o:[
+  {b:'Wochenende opfern',s:'+600 €, aber Sie arbeiten durch',f:function(){S.money+=600;st(8);}},
+  {b:'KI-Angebot in zehn Minuten',s:'Braucht KI-Stufe 2 · +900 €',req:function(){return S.ki[YOU]>=2;},f:function(){S.money+=900;}},
+  {b:'Absagen',s:'Der Auftrag geht an die Konkurrenz',f:function(){S.rivMoney+=600;}}]},
+ {t:'Google-Bewertung: ein Stern',x:'„Niemand ruft zurück." Ausgerechnet unter Ihrem Namen, öffentlich.',o:[
+  {b:'Selbst antworten',s:'−200 € (ein halber Tag) · Ruhe',f:function(){S.money-=200;}},
+  {b:'KI antwortet in Minuten',s:'Braucht KI-Stufe 1 · Der Kunde kommt zurück: +250 €',req:function(){return S.ki[YOU]>=1;},f:function(){S.money+=250;}},
+  {b:'Ignorieren',s:'Einkommen sinkt 20 Sekunden lang um ein Viertel',f:function(){tempMult(0.75,20);}}]},
+ {t:'Fachkraft am Limit',x:'Ihre beste Mitarbeiterin sagt: „So geht das nicht weiter." Die Konkurrenz hat ihr ein Angebot gemacht.',o:[
+  {b:'Gegenangebot',s:'−450 € · Sie bleibt, das Problem auch',f:function(){S.money-=450;S.staff++;}},
+  {b:'KI entlastet sie',s:'Braucht KI-Stufe 1 · Sie bleibt, und sie bleibt gern',req:function(){return S.ki[YOU]>=1;},f:function(){S.staff++;S.money+=100;st(-20);}},
+  {b:'Gehen lassen',s:'Einkommen des Stammbetriebs sinkt dauerhaft um ein Viertel',f:function(){S.mult[YOU]*=0.75;S.lost++;}}]},
+ {t:'Montagmorgen, 47 ungelesene Mails',x:'Anfragen, Rückfragen, zwei Beschwerden, ein Newsletter. Der erste Termin ist um neun.',o:[
+  {b:'Alle selbst durcharbeiten',s:'−150 € · Der Vormittag ist weg, Stress steigt',f:function(){S.money-=150;st(10);}},
+  {b:'KI sortiert und beantwortet Standardfragen',s:'Braucht KI-Stufe 1 · +200 €, Stress sinkt',req:function(){return S.ki[YOU]>=1;},f:function(){S.money+=200;st(-10);}},
+  {b:'Bis Mittwoch liegen lassen',s:'Zwei Kunden warten nicht so lange',f:function(){tempMult(0.8,20);}}]},
+ {t:'Das Telefon klingelt im Kundentermin',x:'Sie sitzen beim Kunden. Das Handy vibriert zum dritten Mal. Unbekannte Nummer.',o:[
+  {b:'Rangehen',s:'Der Kunde vor Ihnen ist verärgert: −100 €',f:function(){S.money-=100;}},
+  {b:'Auf die Mailbox laufen lassen',s:'Der Anrufer probiert es bei der Konkurrenz',f:function(){S.rivMoney+=300;}},
+  {b:'KI-Telefonassistent nimmt an und vergibt Termin',s:'Braucht KI-Stufe 1 · +300 €',req:function(){return S.ki[YOU]>=1;},f:function(){S.money+=300;}}]},
+ {t:'„Was kostet das ungefähr?"',x:'Ein Anrufer will sofort einen Preis. Sie stehen auf der Baustelle, die Preisliste liegt im Büro.',o:[
+  {b:'Aus dem Bauch heraus nennen',s:'Fifty-fifty: +400 € oder Nachkalkulation −300 €',f:function(){if(Math.random()<0.5){S.money+=400;toast('Gut geschätzt.');}else{S.money-=300;toast('Zu billig genannt. Nachkalkulation: −300 €');}}},
+  {b:'„Ich melde mich morgen"',s:'Vier von zehn warten nicht',f:function(){if(Math.random()<0.4){S.rivMoney+=200;toast('Der Anrufer hat woanders bestellt.');}else{S.money+=200;toast('Er hat gewartet. +200 €');}}},
+  {b:'KI erstellt Angebot aus Preisliste',s:'Braucht KI-Stufe 2 · Angebot in zehn Minuten: +600 €',req:function(){return S.ki[YOU]>=2;},f:function(){S.money+=600;}}]},
+ {t:'Falsche Lieferung',x:'Der Lieferant hat das halbe Material vertauscht. Die Baustelle wartet.',o:[
+  {b:'Selbst reklamieren und hinfahren',s:'−100 € und ein halber Tag',f:function(){S.money-=100;st(5);}},
+  {b:'Eine Mitarbeiterin kümmert sich',s:'Kostet nichts, aber Stress im Team',f:function(){st(12);}},
+  {b:'KI-Bestellprüfung hätte es vorher gemerkt',s:'Braucht KI-Stufe 3 · Der Fehler passiert gar nicht: +150 €',req:function(){return S.ki[YOU]>=3;},f:function(){S.money+=150;}}]},
+ {t:'Rechnung seit sechzig Tagen offen',x:'Ein guter Kunde, hohe Rechnung, keine Reaktion. Sie brauchen das Geld.',o:[
+  {b:'Freundlich erinnern',s:'Die Hälfte zahlt sofort: +500 €',f:function(){if(Math.random()<0.5){S.money+=500;toast('Bezahlt. +500 €');}else toast('Keine Reaktion.');}},
+  {b:'Sofort Mahnung mit Frist',s:'+500 €, der Kunde ist verschnupft',f:function(){S.money+=500;S.rivMoney+=150;}},
+  {b:'KI-Mahnwesen läuft automatisch',s:'Braucht KI-Stufe 2 · Höflich, pünktlich, bezahlt: +600 €',req:function(){return S.ki[YOU]>=2;},f:function(){S.money+=600;}}]},
+ {t:'Die Steuerberaterin braucht die Belege',x:'Bis Freitag. Der Schuhkarton ist voll, das Wochenende war eigentlich frei.',o:[
+  {b:'Wochenende sortieren',s:'Kostet nichts außer Nerven',f:function(){st(15);}},
+  {b:'Belege liegen digital bereit',s:'Braucht KI-Stufe 2 · Ein Klick, fertig',req:function(){return S.ki[YOU]>=2;},f:function(){st(-5);S.money+=100;}},
+  {b:'Abgabe verschieben',s:'Säumniszuschlag −250 €',f:function(){S.money-=250;}}]},
+ {t:'Homeoffice-Frage',x:'Ein Mitarbeiter möchte zwei Tage pro Woche von zu Hause arbeiten.',o:[
+  {b:'Ablehnen',s:'Er bleibt, aber die Stimmung kippt',f:function(){st(10);}},
+  {b:'Erlauben mit klaren digitalen Abläufen',s:'Braucht KI-Stufe 1 · Zufriedener, produktiver',req:function(){return S.ki[YOU]>=1;},f:function(){st(-15);}},
+  {b:'Erlauben ohne Regeln',s:'Chaos in der Abstimmung: −10 % für 20 Sekunden',f:function(){tempMult(0.9,20);}}]},
+ {t:'Erster Arbeitstag der neuen Kollegin',x:'Sie steht um acht im Büro und weiß nicht, wo die Kaffeemaschine ist – geschweige denn die Abläufe.',o:[
+  {b:'Sie erklären alles selbst',s:'−200 € · Ein halber Tag Chef-Zeit',f:function(){S.money-=200;}},
+  {b:'Einarbeitung über die KI-Wissensbasis',s:'Braucht KI-Stufe 2 · Sie ist nach zwei Stunden produktiv: +100 €',req:function(){return S.ki[YOU]>=2;},f:function(){S.money+=100;st(-10);}},
+  {b:'Eine Kollegin macht es nebenbei',s:'Beide sind den Tag über gestresst',f:function(){st(15);}}]},
+ {t:'Anfrage um 23 Uhr über Social Media',x:'„Haben Sie morgen Zeit? Sonst nehme ich jemand anderen." Sie liegen im Bett.',o:[
+  {b:'Jetzt antworten',s:'+150 €, aber wieder ein später Abend',f:function(){S.money+=150;st(5);}},
+  {b:'Morgen früh antworten',s:'Drei von zehn sind dann weg',f:function(){if(Math.random()<0.3){S.rivMoney+=200;toast('Zu spät – er hat jemand anderen genommen.');}else{S.money+=150;toast('Er hat gewartet. +150 €');}}},
+  {b:'KI antwortet sofort und bietet Termin an',s:'Braucht KI-Stufe 1 · +250 €, Sie schlafen',req:function(){return S.ki[YOU]>=1;},f:function(){S.money+=250;}}]},
+ {t:'Einladung zur Fachmesse',x:'Ein Stand kostet, bringt aber Kontakte. Die Konkurrenz hat schon zugesagt.',o:[
+  {b:'Stand buchen',s:'−600 € · Danach +15 % für 40 Sekunden',f:function(){S.money-=600;tempMult(1.15,40);}},
+  {b:'Nur als Besucher hingehen',s:'Kostet nichts, bringt wenig',f:function(){}},
+  {b:'Absagen',s:'Die Konkurrenz sammelt die Kontakte allein',f:function(){S.rivMoney+=250;}}]},
+ {t:'Stammkunde will Rabatt',x:'„Zehn Prozent, sonst geh ich zur Konkurrenz." Er ist seit acht Jahren Kunde.',o:[
+  {b:'Rabatt geben',s:'Marge weg – und er erzählt es weiter',f:function(){tempMult(0.85,30);setTimeout(function(){toast('Grundsatz gebrochen: Nächstes Jahr will er zwanzig.');},600);}},
+  {b:'Mehr Leistung, gleicher Preis',s:'−200 € einmalig · Er bleibt und empfiehlt Sie: +10 % für 30 Sekunden',f:function(){S.money-=200;tempMult(1.1,30);}},
+  {b:'Freundlich ablehnen',s:'Sechs von zehn bleiben trotzdem',f:function(){if(Math.random()<0.6)toast('Er ist geblieben. Respekt zahlt sich aus.');else{S.rivMoney+=300;toast('Er ist gegangen.');}}}]},
+ {t:'Stornowelle nach Preiserhöhung',x:'Drei Kunden haben nach dem neuen Preis abgesagt. Zwei weitere fragen nach.',o:[
+  {b:'Zurückrudern',s:'Alte Preise zurück: −10 % für 30 Sekunden',f:function(){tempMult(0.9,30);}},
+  {b:'Mehrwert zeigen: Bericht mit Zahlen',s:'Braucht KI-Stufe 2 · Die Kunden verstehen es: +300 €',req:function(){return S.ki[YOU]>=2;},f:function(){S.money+=300;}},
+  {b:'Aussitzen',s:'Fifty-fifty',f:function(){if(Math.random()<0.5){S.money+=200;toast('Die meisten sind geblieben.');}else{S.rivMoney+=300;toast('Zwei sind zur Konkurrenz.');}}}]},
+ {t:'Schneechaos, halbes Team fehlt',x:'Die Straßen sind dicht, drei Leute kommen nicht. Das Telefon steht nicht still.',o:[
+  {b:'Betrieb für heute schließen',s:'−300 €',f:function(){S.money-=300;}},
+  {b:'Notbesetzung, KI übernimmt Telefon und Termine',s:'Braucht KI-Stufe 1 · Läuft fast normal: +100 €',req:function(){return S.ki[YOU]>=1;},f:function(){S.money+=100;}},
+  {b:'Alle Kunden selbst anrufen und verschieben',s:'−150 € und Stress',f:function(){S.money-=150;st(10);}}]},
+ {t:'Ein Wettbewerber meldet Insolvenz',x:'Seine Kunden suchen jetzt einen neuen Anbieter. Seine beste Fachkraft auch.',o:[
+  {b:'Seine Kunden gezielt anschreiben',s:'Braucht KI-Stufe 2 · Personalisiert in einer Stunde: +700 €',req:function(){return S.ki[YOU]>=2;},f:function(){S.money+=700;}},
+  {b:'Die Fachkraft abwerben',s:'−400 € · Team entlastet, Einkommen +5 % dauerhaft',f:function(){S.money-=400;st(-10);S.mult[YOU]*=1.05;}},
+  {b:'Abwarten',s:'Die Konkurrenz sammelt die Kunden ein',f:function(){S.rivMoney+=400;}}]},
+ {t:'Die Bank ruft an',x:'Liquiditätsgespräch nächste Woche. Sie wollen aktuelle Zahlen sehen.',o:[
+  {b:'Zahlen mühsam zusammensuchen',s:'−200 € · Zwei Abende',f:function(){S.money-=200;}},
+  {b:'KI-Reporting auf Knopfdruck',s:'Braucht KI-Stufe 3 · Die Bank ist beeindruckt: Kredit 300 € günstiger',req:function(){return S.ki[YOU]>=3;},f:function(){if(S.loan>0)S.loan=Math.max(0,S.loan-300);else S.money+=300;}},
+  {b:'Termin verschieben',s:'Die Bank merkt sich das',f:function(){st(10);}}]},
+ {t:'„Machen Sie eigentlich auch KI?"',x:'Ein Neukunde am Telefon. Er hat den Begriff aus der Zeitung.',o:[
+  {b:'„Nein, wir arbeiten klassisch"',s:'Er ruft die Konkurrenz an',f:function(){S.rivMoney+=300;}},
+  {b:'„Ja – zum Beispiel bei Anfragen und Angeboten"',s:'Braucht mindestens eine KI-Stufe · Er ist beeindruckt: +400 €',req:function(){return totalKI()>=1;},f:function(){S.money+=400;}},
+  {b:'„Wir schauen uns das gerade an"',s:'Höflich, folgenlos',f:function(){}}]},
+ {t:'Der Bürgermeister lädt ein',x:'Podiumsdiskussion „Digitalisierung im Ort". Ein Abend, viele Betriebsinhaber im Saal.',o:[
+  {b:'Hingehen und erzählen',s:'Braucht KI-Stufe 2 · Zwei Betriebe vertrauen Ihnen: nächster Kauf 20 % günstiger',req:function(){return S.ki[YOU]>=2;},f:function(){S.rabatt=true;toast('Nächste Übernahme 20 % günstiger.');}},
+  {b:'Absagen, keine Zeit',s:'Die Konkurrenz sitzt auf dem Podium',f:function(){S.rivMoney+=300;}},
+  {b:'Hingehen und zuhören',s:'Ein Abend weg, nichts passiert',f:function(){}}]}
+];
+var MK=[
+ {t:'Lohnrunde im Ort',x:'Der Fachkräftemangel treibt die Löhne. Ihre Leute wissen das.',o:[
+  {b:'Mitziehen',s:'−300 € · Team beruhigt',f:function(){S.money-=300;st(-12);}},
+  {b:'Nicht mitziehen',s:'Stress steigt deutlich',f:function(){st(18);}}]},
+ {t:'Die Zinsen steigen',x:'Die Bank passt die Konditionen an.',o:[
+  {b:'Kredit sofort tilgen',s:'Restschuld auf einmal zahlen',req:function(){return S.loan>0&&S.money>=S.loan;},f:function(){S.money-=S.loan;S.loan=0;toast('Kredit getilgt.');}},
+  {b:'Laufen lassen',s:'Raten steigen um ein Fünftel (falls Kredit läuft)',f:function(){S.loanRate*=1.2;}}]},
+ {t:'Die Konkurrenz wirbt mit „KI-Chatbot"',x:'Großes Plakat am Ortseingang. Ihre Kunden fragen, ob Sie das auch haben.',o:[
+  {b:'Nachziehen und es besser machen',s:'Braucht KI-Stufe 1 · +200 €',req:function(){return S.ki[YOU]>=1;},f:function(){S.money+=200;}},
+  {b:'Ignorieren',s:'Die Konkurrenz gewinnt Aufmerksamkeit',f:function(){S.rivMoney+=300;}}]},
+ {t:'Förderaufruf Digitalisierung',x:'Das Land bezuschusst Betriebe, die Prozesse digitalisieren. Frist: zwei Wochen.',o:[
+  {b:'Antrag stellen',s:'Braucht mindestens zwei KI-Stufen · +500 €',req:function(){return totalKI()>=2;},f:function(){S.money+=500;}},
+  {b:'Keine Zeit für Formulare',s:'Nichts passiert',f:function(){}}]},
+ {t:'Die Konkurrenz senkt die Preise',x:'Sie unterbietet Sie bei einem großen Kunden um zehn Prozent.',o:[
+  {b:'Preis senken',s:'Mitziehen – klingt logisch',f:function(){tempMult(0.7,30);setTimeout(function(){toast('Marge weg. Die Konkurrenz zieht nach. Nichts gewonnen.');},600);}},
+  {b:'Leistung erweitern, Preis bleibt',s:'−300 € einmalig · +15 % für 30 Sekunden',f:function(){S.money-=300;tempMult(1.15,30);}},
+  {b:'Abwarten',s:'Der Kunde entscheidet allein',f:function(){if(Math.random()<0.5){S.rivMoney+=400;toast('Der Kunde ist gegangen.');}else toast('Der Kunde ist geblieben.');}}]},
+ {t:'Nachfrage bricht ein',x:'Konjunkturdelle. Weniger Anfragen im ganzen Ort.',o:[
+  {b:'Jetzt sichtbar werden',s:'−300 € Werbung · +10 % für 30 Sekunden',f:function(){S.money-=300;tempMult(1.1,30);}},
+  {b:'Abwarten und sparen',s:'−15 % für 30 Sekunden',f:function(){tempMult(0.85,30);}}]},
+ {t:'Ausschreibung der Gemeinde',x:'Großauftrag. Angebot muss in zwei Tagen vollständig vorliegen.',o:[
+  {b:'KI erstellt das Angebot',s:'Braucht KI-Stufe 2 · +800 €',req:function(){return S.ki[YOU]>=2;},f:function(){S.money+=800;}},
+  {b:'Nachtschicht',s:'+500 €, Stress steigt',f:function(){S.money+=500;st(15);}},
+  {b:'Nicht teilnehmen',s:'Die Konkurrenz bekommt den Auftrag',f:function(){S.rivMoney+=500;}}]},
+ {t:'Neues Bewertungsportal',x:'Ein Portal listet Betriebe im Ort nach Antwortzeit. Kunden schauen drauf.',o:[
+  {b:'Eintragen',s:'Braucht KI-Stufe 1 · Sie stehen oben: +300 €',req:function(){return S.ki[YOU]>=1;},f:function(){S.money+=300;}},
+  {b:'Nicht eintragen',s:'Die Konkurrenz steht oben',f:function(){S.rivMoney+=200;}}]}
+];
+function offerEvent(i){S.paused=true;$('evTag').textContent='Übernahmeangebot';$('evTitle').textContent=F[i].n;$('evText').textContent='Die Konkurrenz steht vor Ihrem Betrieb ohne KI und bietet das Doppelte des Kaufpreises: '+fmt(F[i].price*2)+'.';
+ var o=$('evOpts');o.innerHTML='';
+ [{b:'Verkaufen · '+fmt(F[i].price*2),s:'Sofort Geld, ein Betrieb weniger',f:function(){S.money+=F[i].price*2;S.own[i]='riv';S.ki[i]=0;toast('Verkauft: '+F[i].n);}},
+  {b:'Ablehnen',s:'Das Brett bleibt Ihres',f:function(){bubble('Schade. Wir kommen wieder.');}},
+  {b:'Ablehnen und sofort KI einführen',s:'Braucht '+fmt(kiCost(i))+' · Dann kommt sie nicht wieder',req:function(){return S.money>=kiCost(i);},f:function(){S.money-=kiCost(i);S.ki[i]=1;toast('🤖 '+F[i].n+': KI-Stufe 1');}}
+ ].forEach(function(op){o.appendChild(optBtn(op));});$('ovEv').classList.add('show');}
+function optBtn(op){var b=document.createElement('button');b.type='button';b.className='opt';b.innerHTML='<b></b><span></span>';b.querySelector('b').textContent=op.b;b.querySelector('span').textContent=op.s;
+ var ok=!op.req||op.req();b.disabled=!ok;if(!ok)b.querySelector('span').textContent='🔒 '+op.s;
+ b.addEventListener('click',function(){op.f();$('ovEv').classList.remove('show');S.paused=false;updUI();check();});return b;}
+function tempMult(m,sec){for(var i=0;i<N;i++)if(S.own[i]==='you')S.mult[i]*=m;setTimeout(function(){for(var j=0;j<N;j++)S.mult[j]/=m;updUI();},sec*1000/SPEED);}
+function drawCard(kind){if(S.cardOpen||S.paused||S.over)return;if(S.cd[kind]>0)return;
+ var deck=S.deck[kind],src=kind==='ev'?EV:MK;if(!deck.length){S.deck[kind]=shuffle(src.map(function(_,k){return k;}));deck=S.deck[kind];}
+ var card=src[deck.pop()];S.cd[kind]=kind==='ev'?24:34;S.idle[kind]=0;S.paused=true;S.cardOpen=true;
+ var bc=$('bigcard'),back=bc.querySelector('.back');back.className='face back '+kind;back.querySelector('b').textContent=kind==='ev'?'EREIGNIS':'MARKT';
+ $('bcTag').textContent=kind==='ev'?'Ereignis':'Markt';$('bcTag').className='ctag'+(kind==='mk'?' blue':'');$('bcTitle').textContent=card.t;$('bcText').textContent=card.x;
+ var o=$('bcOpts');o.innerHTML='';card.o.forEach(function(op){var b=document.createElement('button');b.type='button';b.className='opt';b.innerHTML='<b></b><span></span>';b.querySelector('b').textContent=op.b;b.querySelector('span').textContent=op.s;
+  var ok=!op.req||op.req();b.disabled=!ok;if(!ok)b.querySelector('span').textContent='🔒 '+op.s;
+  b.addEventListener('click',function(){op.f();closeCard();});o.appendChild(b);});
+ // Startgeometrie: der Stapel auf dem Brett
+ var r=cv.getBoundingClientRect(),sc=r.width/W,sx=(kind==='ev'?300:500),sy=(kind==='ev'?300:500);
+ var x0=r.left+(sx-46)*sc,y0=r.top+(sy-30)*sc,w0=92*sc,h0=60*sc;
+ bc.hidden=false;bc.classList.remove('open');bc.style.transition='none';bc.style.left=x0+'px';bc.style.top=y0+'px';bc.style.width=w0+'px';bc.style.height=h0+'px';
+ $('dim').classList.add('show');
+ void bc.offsetWidth;bc.style.transition='';
+ var vw=window.innerWidth,vh=window.innerHeight,w1=Math.min(480,vw-24);
+ var front=bc.querySelector('.front'),m=front.cloneNode(true);m.style.cssText='position:fixed;left:-9999px;top:0;width:'+w1+'px;height:auto;transform:none;inset:auto;visibility:hidden';document.body.appendChild(m);var h1=Math.min(vh-40,m.offsetHeight+6);document.body.removeChild(m);
+ bc.style.left=((vw-w1)/2)+'px';bc.style.top=((vh-h1)/2)+'px';bc.style.width=w1+'px';bc.style.height=h1+'px';bc.classList.add('open');
+ setTimeout(function(){var need=Math.min(vh-40,front.scrollHeight+2);if(Math.abs(need-h1)>8){bc.style.top=((vh-need)/2)+'px';bc.style.height=need+'px';}var f=o.querySelector('button:not([disabled])');if(f)f.focus({preventScroll:true});},800);}
+function closeCard(){var bc=$('bigcard');bc.classList.remove('open');$('dim').classList.remove('show');
+ setTimeout(function(){bc.hidden=true;S.paused=false;S.cardOpen=false;updUI();check();},780);}
+function deckReady(kind){return S.cd[kind]<=0;}
+function updDeckBtns(){var be=$('btnEv'),bm=$('btnMk');var e=deckReady('ev'),m=deckReady('mk');be.disabled=!e||S.paused;bm.disabled=!m||S.paused;
+ be.textContent=e?'🃏 Ereigniskarte ziehen':('🃏 Ereignis in '+Math.ceil(S.cd.ev)+' s');bm.textContent=m?'📈 Marktkarte ziehen':('📈 Markt in '+Math.ceil(S.cd.mk)+' s');}
+$('btnEv').addEventListener('click',function(){drawCard('ev');});$('btnMk').addEventListener('click',function(){drawCard('mk');});
+/* ---------- Ende ---------- */
+function check(){if(S.over)return;var y=cnt('you'),r=cnt('riv');if(r>=8)end('lose');else if(y>=8)end('win');else if(S.t<=0)end(y>r?'win':(y===r&&totalKI()>=4)?'win':y===r?'draw':'lose2');}
+function end(kind){S.over=true;S.paused=true;var y=cnt('you'),r=cnt('riv'),inc=income();
+ if(kind==='win'){trophy('markt');if(!S.loanUsed)trophy('ohnekredit');}
+ if(S.lost===0&&cnt('you')>=2)trophy('staff');
+ var T={win:['Marktführer','Das Brett gehört Ihnen.','Sie haben die Konkurrenz abgehängt. Die Betriebe laufen mit KI – und die Belegschaft ist noch da.'],
+  draw:['Herausforderer','Unentschieden.','Das Brett ist geteilt. Beim nächsten Mal: früher analysieren, früher KI, dann kaufen.'],
+  lose:['Übernommen','Die Konkurrenz GmbH hat Ihr Brett gekauft.','Sie waren zu langsam. So fühlt es sich an, wenn der Wettbewerber zuerst automatisiert.'],
+  lose2:['Zweiter','Die Konkurrenz hat mehr Betriebe.','Knapp. Wer zuerst analysiert und automatisiert, kauft schneller – Sie wissen jetzt, wo Sie Zeit verloren haben.']}[kind];
+ $('endTag').textContent=kind==='lose'?'Spiel vorbei':'Abrechnung';$('endTitle').textContent=T[1];$('endText').textContent=T[2];
+ $('rYou').textContent=y;$('rRiv').textContent=r;$('rInc').textContent=inc.toFixed(1).replace('.',',')+' €/s';$('rTro').textContent=troCount()+'/'+TRO.length;$('rQuit').textContent=S.lost;
+ var title=kind==='win'?(S.name+', Marktführer von Sankt Pixelburg'):kind==='draw'?(S.name+', der Herausforderer'):kind==='lose'?(S.name+', übernommen'):(S.name+', der Zweite');$('rTitle').textContent=title;
+ try{var best=+localStorage.getItem('ez_sim_best')||0;if(y>best){localStorage.setItem('ez_sim_best',y);$('rBest').textContent='🏆 Neuer Bestwert: '+y+' Betriebe';}else $('rBest').textContent='Ihr Bestwert: '+best+' Betriebe';}catch(e){}
+ S.result=S.name+' – KI-Brett von Sankt Pixelburg gegen '+RIVS[S.rt].n+': '+y+' Betriebe zu '+r+', '+inc.toFixed(0)+' €/s, '+S.lost+' Kündigungen, '+troCount()+' von '+TRO.length+' Trophäen, Feierabend um '+feierabend()+' Uhr. Titel: '+T[0]+'. Spielen: ezelero.com/ki-buero-simulator.html';
+ $('ovEnd').classList.add('show');setTimeout(function(){$('ctaEnd').focus();},50);}
+$('btnCopy').addEventListener('click',function(){var b=this,txt=S.result||'';var ok=function(){b.textContent='✓ Kopiert';setTimeout(function(){b.textContent='Ergebnis kopieren';},2000);};
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(ok,function(){window.prompt('Zum Kopieren:',txt);});else window.prompt('Zum Kopieren:',txt);});
+$('btnAgain').addEventListener('click',function(){var nm=S.name,rt=S.rt;reset(rt);keys={};S.name=nm;S.paused=false;$('ovEnd').classList.remove('show');$('bubble').classList.remove('show');updUI();});
+
+/* ---------- Loop ---------- */
+var last=null;
+function loop(ts){if(last===null)last=ts;var dt=Math.min(0.1,(ts-last)/1000)*SPEED;last=ts;
+ if(!S.paused&&!S.over){var before=S.t;S.t-=dt;S.money+=income()*dt;S.rivMoney+=S.rivRate*dt;S.nextEv-=dt;rivalPhase();
+  for(var si=0;si<N;si++){if(S.own[si]!=='you'||(F[si].k!=='b'&&F[si].k!=='hq'))continue;var k=S.ki[si],rate=k===0?1.3+0.12*cnt('you'):k===1?-0.3:-3;S.stress[si]=Math.max(0,Math.min(100,S.stress[si]+rate*dt));
+   if(S.stress[si]>=100&&S.qa[si]<2){S.stress[si]=25;S.qa[si]++;S.mult[si]*=0.8;S.quit++;S.lost++;toast('😮‍💨 '+F[si].n+': Eine Fachkraft hat gekündigt – zu viel Zettelwirtschaft. Einkommen dort −25 %');bubble('Gute Leute, die Ihnen weglaufen? Wir nehmen sie gern.');updUI();}}
+  if(S.loan>0){var pay=Math.min(S.loan,S.loanRate*dt);S.money-=pay;S.loan-=pay;if(S.loan<=0){S.loan=0;toast('💶 Kredit zurückgezahlt.');}}
+  if(S.analyzing){S.analyzing.t-=dt;if(S.analyzing.t<=0){var ai=S.analyzing.i;S.known[ai]=true;S.analyzing=null;trophy('analyse');toast('🔍 '+F[ai].n+': Potenzial '+stars(ai));updUI();}}
+  S.rivProg+=dt/S.rivStep;if(S.rivProg>=1){S.rivProg=0;S.rivFrom=S.rivPos;S.rivPos=nextPos(S.rivPos);rivalLand(S.rivPos);}
+  S.cd.ev-=dt;S.cd.mk-=dt;if(S.cd.ev<=0){S.idle.ev+=dt;if(S.idle.ev>40)drawCard('ev');}
+  updDeckBtns();
+  // Kunden
+  if(Math.random()<dt*1.2&&S.custs.length<10){var tg=[];for(var i=0;i<N;i++)if(S.own[i]==='you'&&S.ki[i]>0)tg.push(i);if(tg.length){var t2=tg[Math.floor(Math.random()*tg.length)];S.custs.push({f:Math.floor(Math.random()*N),to:t2,p:0,sp:0.25+Math.random()*0.25,c:['#f5c518','#00d4ff','#a855f7','#2e8b57'][Math.floor(Math.random()*4)]});}}
+  for(var c=S.custs.length-1;c>=0;c--){var cu=S.custs[c];cu.p+=dt*cu.sp;if(cu.p>=1){S.coins.push({i:cu.to,t:1});S.custs.splice(c,1);}}
+  for(var k=S.coins.length-1;k>=0;k--){S.coins[k].t-=dt;if(S.coins[k].t<=0)S.coins.splice(k,1);}
+  if(Math.floor(S.t*4)!==Math.floor(before*4))updUI();check();}
+ moveHero(dt/SPEED);draw();requestAnimationFrame(loop);}
+/* ---------- Held bewegen: Maus, Pfeiltasten, Finger ---------- */
+var keys={},mouse=null,hover=false;
+function moveHero(dt){var hh=S.hero,sp=230;
+ var kx=(keys.ArrowRight||keys.d?1:0)-(keys.ArrowLeft||keys.a?1:0),ky=(keys.ArrowDown||keys.s?1:0)-(keys.ArrowUp||keys.w?1:0);
+ if(kx||ky){var l=Math.hypot(kx,ky);hh.tx=hh.x+kx/l*sp*dt*1.2;hh.ty=hh.y+ky/l*sp*dt*1.2;}
+ else if(hover&&mouse){hh.tx=mouse.x;hh.ty=mouse.y;}
+ hh.tx=Math.max(20,Math.min(W-20,hh.tx));hh.ty=Math.max(30,Math.min(H-14,hh.ty));
+ var dx=hh.tx-hh.x,dy=hh.ty-hh.y,dist=Math.hypot(dx,dy);
+ if(dist>3){var st=Math.min(dist,sp*dt);hh.x+=dx/dist*st;hh.y+=dy/dist*st;hh.mv=true;hh.ph+=dt*11;if(Math.abs(dx)>2)hh.dir=dx>0?1:-1;}else hh.mv=false;
+ var f=fieldAt(hh.x,hh.y);if(f!==null&&f!==hh.fld){hh.fld=f;if(!S.paused&&!S.over){S.sel=f;updUI();}}
+}
+function fieldAt(x,y){for(var i=0;i<N;i++){var q=rect(i);if(x>=q.x&&x<=q.x+q.w&&y>=q.y&&y<=q.y+q.h)return i;}return null;}
+function toBoard(e){var r=cv.getBoundingClientRect();var p=e.touches?e.touches[0]:e;return{x:(p.clientX-r.left)/r.width*W,y:(p.clientY-r.top)/r.height*H};}
+function initControls(){
+cv.addEventListener('mousemove',function(e){mouse=toBoard(e);hover=true;});
+cv.addEventListener('mouseleave',function(){hover=false;});
+cv.addEventListener('touchstart',function(e){mouse=toBoard(e);hover=true;},{passive:true});
+cv.addEventListener('touchmove',function(e){mouse=toBoard(e);hover=true;if(e.cancelable)e.preventDefault();},{passive:false});
+cv.addEventListener('touchend',function(){hover=false;},{passive:true});
+window.addEventListener('keydown',function(e){var k=e.key;if(/^Arrow|^[wasd]$/.test(k)){var over=document.activeElement===cv||hover;if(!over)return;keys[k]=true;if(k.indexOf('Arrow')===0)e.preventDefault();}});
+window.addEventListener('keyup',function(e){keys[e.key]=false;});
+cv.addEventListener('mousedown',function(){try{cv.focus({preventScroll:true});}catch(e){cv.focus();}});
+}
+
+/* ---------- Zeichnen ---------- */
+var cv=$('cv'),cx=cv.getContext('2d');var W=800,H=800,CS=120,SL=(W-2*CS)/3;
+function rect(i){ // Feld-Rechteck
+ if(i===0)return{x:0,y:H-CS,w:CS,h:CS};if(i<4)return{x:0,y:H-CS-SL*i,w:CS,h:SL};
+ if(i===4)return{x:0,y:0,w:CS,h:CS};if(i<8)return{x:CS+SL*(i-5),y:0,w:SL,h:CS};
+ if(i===8)return{x:W-CS,y:0,w:CS,h:CS};if(i<12)return{x:W-CS,y:CS+SL*(i-9),w:CS,h:SL};
+ if(i===12)return{x:W-CS,y:H-CS,w:CS,h:CS};return{x:W-CS-SL*(i-12),y:H-CS,w:SL,h:CS};}
+function center(i){var r=rect(i);return{x:r.x+r.w/2,y:r.y+r.h/2};}
+function dark(){var a=document.documentElement.getAttribute('data-theme');return a==='dark'||(!a&&matchMedia('(prefers-color-scheme: dark)').matches);}
+function shade(hex,f){var n=parseInt(hex.slice(1),16),r=(n>>16)&255,g=(n>>8)&255,b=n&255;r=Math.min(255,Math.round(r*f));g=Math.min(255,Math.round(g*f));b=Math.min(255,Math.round(b*f));return 'rgb('+r+','+g+','+b+')';}
+function house(cxp,by,w,d,h,col,win){ // Pseudo-3D-Haus: Front, Seite, Dach
+ var x=cxp-w/2;cx.fillStyle=shade(col,0.72);cx.beginPath();cx.moveTo(x+w,by);cx.lineTo(x+w+d,by-d*0.6);cx.lineTo(x+w+d,by-d*0.6-h);cx.lineTo(x+w,by-h);cx.closePath();cx.fill();
+ cx.fillStyle=col;cx.fillRect(x,by-h,w,h);
+ cx.fillStyle=shade(col,1.25);cx.beginPath();cx.moveTo(x,by-h);cx.lineTo(x+d,by-h-d*0.6);cx.lineTo(x+w+d,by-h-d*0.6);cx.lineTo(x+w,by-h);cx.closePath();cx.fill();
+ var rows=Math.floor((h-10)/14);for(var r=0;r<rows;r++)for(var c=0;c<Math.max(1,Math.floor(w/16));c++){cx.fillStyle=win;cx.fillRect(x+5+c*16,by-h+6+r*14,9,8);}
+ cx.fillStyle=shade(col,0.6);cx.fillRect(x+w/2-4,by-12,8,12);}
+function draw(){var d=dark();
+ cx.fillStyle=d?'#161a21':'#eef3f8';cx.fillRect(0,0,W,H);
+ // Mitte
+ cx.fillStyle=d?'#1d2330':'#dfeaf5';cx.fillRect(CS,CS,W-2*CS,H-2*CS);
+ cx.save();cx.translate(W/2,H/2);cx.rotate(-Math.PI/4);cx.textAlign='center';cx.fillStyle=d?'rgba(255,255,255,.07)':'rgba(0,113,227,.10)';cx.font='800 74px Sora,sans-serif';cx.fillText('KI-BRETT',0,-10);cx.font='600 26px Sora,sans-serif';cx.fillText('SANKT PIXELBURG',0,30);cx.restore();
+ // Kartenstapel
+ stack(300,300,'#a855f7','EREIGNIS',-0.25,deckReady('ev'));stack(500,500,'#00b8e6','MARKT',0.25,deckReady('mk'));
+ // Felder
+ for(var i=0;i<N;i++){var r=rect(i),f=F[i],own=S.own[i];
+  cx.fillStyle=d?(own==='you'?'#1a2e3a':own==='riv'?'#33202a':'#222835'):(own==='you'?'#e6f8ff':own==='riv'?'#fbe9ec':'#fafbfd');cx.fillRect(r.x,r.y,r.w,r.h);
+  cx.strokeStyle=d?'#2d3545':'#c9d2dd';cx.lineWidth=2;cx.strokeRect(r.x+1,r.y+1,r.w-2,r.h-2);
+  // Viertel-Farbe: Streifen am Innenrand
+  if(f.g){cx.fillStyle=G[f.g].c;if(i<4)cx.fillRect(r.x+r.w-14,r.y,14,r.h);else if(i<8)cx.fillRect(r.x,r.y+r.h-14,r.w,14);else if(i<12)cx.fillRect(r.x,r.y,14,r.h);else cx.fillRect(r.x,r.y,r.w,14);}
+  // Konkurrenz-Route (Fähigkeit Immobilien): nächste zwei Felder markieren
+  if(hasAb('blick')&&(i===nextPos(S.rivPos)||i===nextPos(nextPos(S.rivPos)))){cx.strokeStyle='rgba(176,36,60,.6)';cx.setLineDash([6,4]);cx.lineWidth=3;cx.strokeRect(r.x+4,r.y+4,r.w-8,r.h-8);cx.setLineDash([]);}
+  if(S.sel===i){cx.strokeStyle='#a855f7';cx.lineWidth=4;cx.strokeRect(r.x+3,r.y+3,r.w-6,r.h-6);}
+  // Haus
+  var c=center(i),lvl=f.k==='b'||f.k==='hq'?(own==='you'?S.ki[i]:0):0;if(f.k==='riv')lvl=S.rivKI;
+  var col=own==='you'?(f.k==='hq'?'#1f8fd0':'#3aa0c8'):own==='riv'?'#b0243c':(f.k==='bank'?'#b7791f':f.k==='amt'?'#6b4fbb':f.k==='riv'?'#5a5a66':(d?'#6b7385':'#b8bfc9'));
+  var hh=26+lvl*16+(f.k==='bank'||f.k==='amt'||f.k==='riv'||f.k==='hq'?12:0);
+  var win=own==='you'&&lvl>0?'#bff4ff':own==='riv'?'#ffd6dc':(d?'#2c3140':'#ffffff');
+  house(c.x-6,c.y+18,34,12,hh,col,win);
+  // Icon + Name
+  cx.textAlign='center';cx.font='16px system-ui,sans-serif';cx.fillStyle='#000';cx.fillText(f.ic,c.x-6,c.y-hh-4);
+  cx.fillStyle=d?'#e8eaf0':'#1d1d1f';cx.font='600 10.5px Inter,system-ui,sans-serif';var nm=f.n.length>17?f.n.slice(0,16)+'…':f.n;
+  if(i<4||(i>=9&&i<12)){cx.save();cx.translate(c.x-(i<4?36:-30),c.y);cx.rotate(i<4?-Math.PI/2:Math.PI/2);cx.fillText(nm,0,4);cx.restore();}else cx.fillText(nm,c.x,(i>=5&&i<8)?r.y+r.h-30:r.y+r.h-20);
+  // Statuszeile
+  var lab=f.k==='b'?(own==='you'?'KI '+S.ki[i]+'/3 '+stars(i):own==='riv'?'KONKURRENZ':(fmt(priceOf(i))+' '+stars(i))):f.k==='hq'?'KI '+S.ki[i]+'/3':f.k==='riv'?'GEGNER':f.k==='bank'?'KREDIT':'FÖRDERUNG';
+  cx.font='bold 9.5px Inter,system-ui,sans-serif';cx.fillStyle=own==='you'?'#0090b3':own==='riv'?'#b0243c':(d?'#aab2c2':'#6f6f76');
+  if(i<4||(i>=9&&i<12)){cx.save();cx.translate(c.x-(i<4?50:-44),c.y);cx.rotate(i<4?-Math.PI/2:Math.PI/2);cx.fillText(lab,0,4);cx.restore();}else cx.fillText(lab,c.x,(i>=5&&i<8)?r.y+r.h-18:r.y+r.h-8);
+  if(own==='you'&&(f.k==='b'||f.k==='hq')){var sv=S.stress[i];cx.fillStyle=d?'#2c3140':'#e5e5ea';cx.fillRect(c.x-26,c.y-hh-30,40,5);cx.fillStyle=sv>=75?'#d7263d':sv>=45?'#e8a317':'#2e8b57';cx.fillRect(c.x-26,c.y-hh-30,40*sv/100,5);}
+  // Analyse-Figur
+  if(S.analyzing&&S.analyzing.i===i){figure(c.x+22,c.y-2,'#0090b3',false);cx.fillStyle='#0090b3';cx.font='bold 10px Inter';cx.fillText('🔍',c.x+28,c.y-14);}
+  // Münzen
+ }
+ // Kunden
+ S.custs.forEach(function(cu){var a=center(cu.f),b=center(cu.to),x=a.x+(b.x-a.x)*cu.p,y=a.y+(b.y-a.y)*cu.p;var lp=Math.sin(cu.p*40)*1.5;cx.fillStyle=cu.c;cx.fillRect(x-3,y-9,6,6);cx.fillStyle='#1d1d1f';cx.fillRect(x-3,y-3,6,5);cx.fillRect(x-3+lp,y+2,2,4);cx.fillRect(x+1-lp,y+2,2,4);});
+ S.coins.forEach(function(co){var c2=center(co.i);cx.fillStyle='#f5c518';cx.beginPath();cx.arc(c2.x-6,c2.y-40-(1-co.t)*30,5,0,6.28);cx.fill();cx.fillStyle='#8a6d00';cx.font='bold 8px Inter';cx.fillText('€',c2.x-8,c2.y-37-(1-co.t)*30);});
+ // Konkurrenz-Figur wandert
+ var pa=center(S.rivFrom),pb=center(S.rivPos),p=Math.min(1,S.rivProg*1.6);var rx=pa.x+(pb.x-pa.x)*p,ry=pa.y+(pb.y-pa.y)*p;
+ var rmv=p<1;if(rmv){S.rivPh+=0.35;if(Math.abs(pb.x-pa.x)>2)S.rivDir=pb.x>pa.x?1:-1;}
+ figure(rx+28,ry+4,'#3a3a44',false,true,S.rivDir,rmv?S.rivPh:0);
+ // Chef: folgt Maus / Pfeiltasten
+ var hh=S.hero;figure(hh.x,hh.y,'#1d3a8a',true,false,hh.dir,hh.mv?hh.ph:0);
+ cx.fillStyle=d?'#f2f3f6':'#1d1d1f';cx.font='bold 10px Inter';cx.textAlign='center';cx.fillText(S.name,hh.x,hh.y-36);
+}
+function stack(x,y,col,label,rot,ready){cx.save();cx.translate(x,y);cx.rotate(rot);if(ready){cx.shadowColor=col;cx.shadowBlur=28;cx.fillStyle=col;cx.fillRect(-46,-30,92,60);cx.shadowBlur=0;}for(var k=2;k>=0;k--){cx.fillStyle=k?shade(col,0.85):col;cx.fillRect(-46-k*2,-30+k*3,92,60);}
+ cx.fillStyle='#fff';cx.font='800 13px Sora,sans-serif';cx.textAlign='center';cx.fillText(label,0,-2);cx.font='600 9px Inter';cx.fillText(ready?'▶ Karte ziehen':'Sankt Pixelburg',0,14);cx.restore();}
+function figure(x,y,suit,crown,hat,dir,ph){dir=dir||1;ph=ph||0;var s='#f1c9a5',sw=Math.sin(ph)*4,bob=ph?Math.abs(Math.sin(ph))*1.5:0;y-=bob;
+ cx.fillStyle=s;cx.fillRect(x-5,y-22,10,10);cx.fillStyle=suit;cx.fillRect(x-7,y-12,14,14);
+ cx.fillRect(x-6+sw*0.5,y+2,5,9);cx.fillRect(x+1-sw*0.5,y+2,5,9);
+ cx.fillStyle='#1d1d1f';cx.fillRect(x-3+dir,y-19,2,2);cx.fillRect(x+1+dir,y-19,2,2);
+ cx.fillStyle=suit;cx.fillRect(x-9,y-10+sw*0.4,3,8);cx.fillRect(x+6,y-10-sw*0.4,3,8);
+ if(crown){cx.fillStyle='#f5c518';cx.fillRect(x-6,y-27,12,5);cx.fillRect(x-6,y-30,3,3);cx.fillRect(x-1,y-30,3,3);cx.fillRect(x+4,y-30,3,3);}
+ if(hat){cx.fillStyle='#1d1d1f';cx.fillRect(x-7,y-25,14,3);cx.fillRect(x-4,y-31,8,6);}}
+cv.addEventListener('click',function(e){if(S.paused)return;var p=toBoard(e);if(Math.abs(p.x-300)<62&&Math.abs(p.y-300)<46){drawCard('ev');return;}if(Math.abs(p.x-500)<62&&Math.abs(p.y-500)<46){drawCard('mk');return;}S.hero.tx=p.x;S.hero.ty=p.y;var i=fieldAt(p.x,p.y);if(i!==null){S.sel=i;updUI();}});
+
+/* ---------- Start ---------- */
+var rivSel=1;$('rivPills').addEventListener('click',function(e){var b=e.target.closest('[data-r]');if(!b)return;rivSel=+b.getAttribute('data-r');[].forEach.call($('rivPills').children,function(x){x.classList.toggle('on',x===b);});$('rivDesc').textContent=RIVS[rivSel].d;});
+$('btnStart').addEventListener('click',function(){var v=$('name').value.trim();reset(rivSel);S.name=v?v.slice(0,18):'Chef';$('ovStart').classList.remove('show');S.paused=false;S.sel=YOU;updUI();toast('Los geht’s, '+S.name+'. Erst KI im eigenen Betrieb, dann analysieren, dann kaufen.');});
+$('name').addEventListener('keydown',function(e){if(e.key==='Enter')$('btnStart').click();});
+initControls();updUI();requestAnimationFrame(loop);
+
+document.querySelectorAll('a[href*="calendly.com"]').forEach(function(a){var u=a.getAttribute('href').split('?')[0],p=['utm_source=website','utm_medium=simulator'];if(BRANCHE&&BRANCHE!=='andere')p.push('utm_content='+encodeURIComponent(BRANCHE));a.setAttribute('href',u+'?'+p.join('&'));});
+})();
+</script>
+</body>
+</html>
