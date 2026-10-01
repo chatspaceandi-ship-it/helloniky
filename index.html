@@ -332,6 +332,20 @@ img{max-width:100%;height:auto}
 .faq details[open] summary::after{transform:rotate(45deg)}
 .faq details p{color:var(--ink-2);font-size:14.5px;padding:0 0 16px;margin:0}
 .faq summary:focus-visible{outline:3px solid var(--cyan);outline-offset:2px;border-radius:8px}
+/* Handy: Text linksbündig, nur Buttons und Bilder bleiben zentriert/vollbreit */
+@media (max-width:720px){
+ .hero,.hero .wrap,.hero-copy,.sec-head,.trust,.fail-line,.price-rule,.cta-final,.simcard,.top,.br-result,.hero .note,.hero .safe{text-align:left}
+ .hero-copy h1,.hero-copy .rot,.hero-copy .lead,.sec-head h2,.sec-head p,.cta-final h2,.cta-final p,.simcard h2,.simcard p{margin-left:0;margin-right:0}
+ .hero .cta-row,.hero .safe,.hero .note,.cta-final .cta-row,.cta-final .safe,.trust{justify-content:flex-start}
+ .hero .cta-row{align-items:flex-start}
+ .hero .btn-primary{width:100%;justify-content:center}
+ .hero .btn-link{padding-left:4px}
+ .br-pills,.pills{justify-content:flex-start}
+ .simcard{align-items:flex-start}
+ .simcard .btn2{align-self:flex-start}
+ .proof{justify-content:flex-start}
+ .hero-fx{left:-20%}
+}
 .skip{position:absolute;left:-9999px;top:8px;background:#000;color:#fff;padding:10px 16px;border-radius:8px;z-index:200;font-weight:600;text-decoration:none}
 .skip:focus{left:12px;outline:3px solid #00d4ff;outline-offset:2px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -420,7 +434,7 @@ section>.wrap{position:relative;z-index:2}
 <nav aria-label="Hauptnavigation"><div class="nav-in">
   <a href="#" class="logo-img"><img src="/ezelero-logo.webp" width="320" height="96" alt="Ezelero" decoding="async"></a>
   <div class="nav-links" id="navmenu">
-    <a href="#leistungen">Leistungen</a><a href="#branche">Branchen</a><a href="#ablauf">Ablauf</a><a href="#preise">Preise</a><a href="#faq">FAQ</a><a href="ki-buero-simulator.html">Simulator</a>
+    <a href="#leistungen">Leistungen</a><a href="#branche">Branchen</a><a href="#ablauf">Ablauf</a><a href="preise.html">Preise</a><a href="#faq">FAQ</a><a href="ki-buero-simulator.html">Simulator</a>
   </div>
   <span class="nav-micro" aria-hidden="true">Kostenlos · Unverbindlich</span>
   <a class="nav-cta" href="#anfrage"><span class="nc-long">Kostenlose Erstanalyse</span><span class="nc-short">Erstanalyse</span></a>
@@ -627,7 +641,7 @@ section>.wrap{position:relative;z-index:2}
       <ul><li>Wartung und Anpassung der laufenden Automatisierung</li><li>Ausbau auf den nächsten Prozess, wenn der erste sitzt</li><li>Direkter Draht bei Fragen und Änderungen</li><li>Monatlicher Kurzbericht: Was lief, was wurde eingespart</li></ul>
       <a class="btn btn-primary" href="#anfrage">Erstanalyse anfragen</a></div>
   </div>
-  <div class="price-rule reveal"><strong>Unsere Preise sind fix.</strong> Reicht Ihr Budget nicht, passen wir den Umfang an – nicht den Preis. Rabatte gibt es nicht, dafür mehr Leistung.</div>
+  <div class="price-rule reveal"><strong>Unsere Preise sind fix.</strong> Reicht Ihr Budget nicht, passen wir den Umfang an – nicht den Preis. Rabatte gibt es nicht, dafür mehr Leistung.<br><a href="preise.html">Alle Details, Beispielrechnung und Team-Workshop ab 1.200 € →</a></div>
 </div></section>
 
 <section id="faq"><div class="wave-top to-white" aria-hidden="true"><svg viewBox="0 0 1200 44" preserveAspectRatio="none"><path d="M0,44 C400,4 800,4 1200,44 Z"></path></svg></div><div class="wrap">
