@@ -8,6 +8,15 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="canonical" href="https://ezelero.com/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Was kostet KI für einen kleinen Betrieb?","acceptedAnswer":{"@type":"Answer","text":"Die Erstanalyse ist kostenlos. Ein Pilot-Sprint beginnt bei 3.900 Euro zum Festpreis, die laufende Begleitung bei 490 Euro im Monat, monatlich kündbar."}},
+{"@type":"Question","name":"Wie läuft die Erstanalyse ab?","acceptedAnswer":{"@type":"Answer","text":"45 Minuten per Video oder Telefon mit dem Gründer. Wir suchen den Prozess, der am meisten Zeit kostet, und sagen, was machbar ist, was es bringt und was es kostet."}},
+{"@type":"Question","name":"Wie lange dauert ein Pilot-Sprint?","acceptedAnswer":{"@type":"Answer","text":"Zwei bis vier Wochen. Am Ende läuft die Lösung im Betrieb, das Team ist eingewiesen und die Zeitersparnis ist gemessen."}},
+{"@type":"Question","name":"Für welche Betriebe eignet sich das?","acceptedAnswer":{"@type":"Answer","text":"Für Betriebe mit wiederkehrenden Aufgaben: Handwerk, Handel, Dienstleister, Gastronomie, Praxen – unabhängig von der Größe."}},
+{"@type":"Question","name":"Brauche ich technisches Wissen?","acceptedAnswer":{"@type":"Answer","text":"Nein. Die Lösung baut auf den vorhandenen Werkzeugen auf, das Team wird geschult, ein Ansprechpartner bleibt."}},
+{"@type":"Question","name":"Was passiert mit unseren Daten?","acceptedAnswer":{"@type":"Answer","text":"Vor dem Projekt wird festgelegt, welche Daten die Lösung sieht. Kundendaten werden nicht weitergegeben und nicht zum Trainieren fremder Systeme verwendet."}},
+{"@type":"Question","name":"Ersetzt die KI meine Mitarbeiter?","acceptedAnswer":{"@type":"Answer","text":"Nein. Die KI übernimmt Routine, die Mitarbeiter bekommen Zeit für Kunden. Ezelero wirbt nie mit Personaleinsparung."}},
+{"@type":"Question","name":"Was, wenn es nicht funktioniert?","acceptedAnswer":{"@type":"Answer","text":"Die Messphase vergleicht Zeit vorher und nachher. Erst bei nachweisbarer Ersparnis folgt der nächste Prozess. Der Festpreis schließt Nachträge aus."}}]}</script>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ezelero">
 <meta property="og:locale" content="de_DE">
@@ -178,7 +187,7 @@ html,body{background:var(--white)}
 .grad.hz .hzl{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hz .hzl.in{opacity:1;transform:none}
 /* Kinetische Typografie: fließender Farbverlauf in Überschriften */
-.grad.hz .hzl,h1 .grad,.cta-final h2{background-image:linear-gradient(90deg,#00b8e6,#7b6cf0,#a855f7,#7b6cf0,#00b8e6);background-size:200% auto;animation:gradFlow 8s linear infinite}
+.grad.hz .hzl,h1 .grad,.rot .grad,.hero-form h2 .grad,.cta-final h2{background-image:linear-gradient(90deg,#00b8e6,#7b6cf0,#a855f7,#7b6cf0,#00b8e6);background-size:200% auto;animation:gradFlow 8s linear infinite}
 @keyframes gradFlow{to{background-position:200% center}}
 html{scroll-behavior:smooth}
 section[id]{scroll-margin-top:70px}
@@ -240,6 +249,89 @@ html{font-synthesis:none;font-optical-sizing:auto;text-rendering:optimizeLegibil
 @media (max-width:820px){.mcta{display:block}.nav-cta{display:none}body.mcta-on .to-top{bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
 @media (prefers-reduced-motion:reduce){.mcta{transition:none}}
 img{max-width:100%;height:auto}
+/* Hero-Formular */
+.hero-grid{display:grid;grid-template-columns:1fr;gap:28px;align-items:start}
+.hero-form{background:var(--card,#fff);border:1px solid var(--line);border-radius:22px;padding:22px 20px 18px;text-align:left;box-shadow:0 20px 60px rgba(30,20,60,.10);max-width:560px;margin:8px auto 0}
+[data-theme="dark"] .hero-form{background:#191d24}
+.hero-form h2{font-size:20px;font-weight:650;letter-spacing:-.02em}
+.hero-form .sub{font-size:13.5px;color:var(--ink-2);margin:4px 0 14px}
+.hero-form .q{font-size:13.5px;font-weight:600;margin:12px 0 8px}
+.topics{display:flex;flex-wrap:wrap;gap:8px}
+.topics button{font:inherit;font-size:13px;font-weight:500;padding:8px 12px;border-radius:99px;border:1.5px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;transition:.15s}
+.topics button:hover{border-color:var(--violet)}
+.topics button.on{background:var(--grad);color:#fff;border-color:transparent}
+.topics button:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.frow label,.f1 label{display:block;font-size:12.5px;font-weight:600;margin-bottom:5px;color:var(--ink-2)}
+.frow label em,.f1 label em{font-style:normal;font-weight:400;color:var(--ink-3)}
+.hero-form input{width:100%;font:inherit;font-size:15px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:var(--gray);color:var(--ink);min-height:44px}
+.hero-form input:focus{outline:3px solid rgba(0,212,255,.45);border-color:var(--cyan)}
+.hero-form .btn-primary{width:100%;justify-content:center;margin-top:12px}
+.hero-form .fine{font-size:12px;color:var(--ink-3);margin-top:10px;line-height:1.45}
+.hero-form .or{display:flex;align-items:center;gap:12px;margin:16px 0 10px;color:var(--ink-3);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase}
+.hero-form .or::before,.hero-form .or::after{content:"";flex:1;height:1px;background:var(--line)}
+.hero-form .cb{display:flex;gap:10px;margin-top:8px}
+.hero-form .cb input{flex:1}
+.hero-form .btn-dark2{width:100%;justify-content:center;margin-top:10px;background:#1d1d1f;color:#fff}
+[data-theme="dark"] .hero-form .btn-dark2{background:#fff;color:#1d1d1f}
+.hero-form .ok{display:none;background:rgba(46,139,87,.12);border:1px solid rgba(46,139,87,.4);color:#1f6b3f;border-radius:12px;padding:10px 12px;font-size:13.5px;margin-top:10px}
+[data-theme="dark"] .hero-form .ok{color:#8fe0b0}
+.hero-form .ok.show{display:block}
+@media (min-width:980px){.hero-grid{grid-template-columns:1.05fr .95fr;gap:40px;text-align:left}.hero-copy h1{font-size:clamp(34px,3.9vw,54px)}.hero-copy .rot{font-size:clamp(22px,2.6vw,32px)}.hero-copy .lead{font-size:17px}.hero-copy .cta-row{justify-content:flex-start}.hero-copy .safe,.hero-copy .note{justify-content:flex-start;text-align:left}.hero-copy h1{margin-left:0}.hero-copy .lead{margin-left:0}.hero-form{margin:0}.hero-fx{left:0}}
+/* Scheitern */
+.fail{margin-top:56px}
+.fail .sec-head{margin-bottom:22px}
+.fail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.fail-grid .scard{padding:22px}
+.fail-grid .scard .num{font-family:var(--fh);font-size:28px;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.fail-grid .scard h3{font-size:17px;margin:6px 0 6px}
+.fail-grid .scard p{font-size:14px;color:var(--ink-2)}
+.fail-line{text-align:center;margin-top:18px;font-weight:600}
+@media (max-width:720px){.fail-grid{grid-template-columns:1fr}}
+/* Rechner */
+.calc{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;background:var(--card,#fff);border:1px solid var(--line);border-radius:22px;padding:22px;max-width:960px;margin:0 auto;text-align:left}
+[data-theme="dark"] .calc{background:#191d24}
+.calc .fld{margin-bottom:18px}
+.calc .fld .lab{display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;margin-bottom:6px}
+.calc .fld .lab input{width:86px;font:inherit;font-size:14px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--gray);color:var(--ink);text-align:right}
+.calc input[type=range]{width:100%;accent-color:#a855f7}
+.calc .fld small{display:block;text-align:right;font-size:12px;color:var(--ink-3);margin-top:2px}
+.calc-res{background:linear-gradient(135deg,#0b2a4a,#1a1140);color:#fff;border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:10px}
+.calc-res .big{font-family:var(--fh);font-size:40px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.calc-res .big small{font-size:16px;font-weight:600;letter-spacing:0}
+.calc-res .sub{opacity:.85;font-size:14px}
+.calc-res .verdict{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:10px 12px;font-size:14px}
+.calc-res .fine{font-size:12px;opacity:.7;line-height:1.45}
+.calc-res .btn{align-self:flex-start;background:#fff;color:#1d1d1f;margin-top:4px}
+@media (max-width:820px){.calc{grid-template-columns:1fr;padding:16px}}
+/* Preise */
+.prices{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1000px;margin:0 auto}
+.price{background:var(--card,#fff);border:1px solid var(--line);border-radius:22px;padding:26px 22px;text-align:left;display:flex;flex-direction:column}
+[data-theme="dark"] .price{background:#191d24}
+.price.hi{border:2px solid transparent;background:linear-gradient(var(--card,#fff),var(--card,#fff)) padding-box,var(--grad) border-box}
+[data-theme="dark"] .price.hi{background:linear-gradient(#191d24,#191d24) padding-box,var(--grad) border-box}
+.price .kick{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#007a99}
+[data-theme="dark"] .price .kick{color:#57c7ea}
+.price h3{font-size:20px;margin:6px 0 2px}
+.price .amt{font-family:var(--fh);font-size:34px;font-weight:700;letter-spacing:-.03em;margin:8px 0 2px}
+.price .amt small{font-size:14px;font-weight:500;color:var(--ink-3);letter-spacing:0}
+.price .dur{font-size:13px;color:var(--ink-3);margin-bottom:12px}
+.price ul{list-style:none;padding:0;margin:0 0 16px;display:grid;gap:7px;font-size:14px;color:var(--ink-2)}
+.price li::before{content:"✓";color:#0090b3;font-weight:700;margin-right:8px}
+.price .btn{margin-top:auto;justify-content:center}
+.price-rule{max-width:720px;margin:22px auto 0;text-align:center;background:var(--card,#fff);border:1px solid var(--line);border-radius:16px;padding:14px 18px;font-size:14.5px}
+[data-theme="dark"] .price-rule{background:#191d24}
+@media (max-width:820px){.prices{grid-template-columns:1fr}}
+/* FAQ */
+.faq{max-width:760px;margin:0 auto;text-align:left}
+.faq details{background:var(--card,#fff);border:1px solid var(--line);border-radius:14px;padding:0 18px;margin-bottom:10px}
+[data-theme="dark"] .faq details{background:#191d24}
+.faq summary{cursor:pointer;font-weight:600;font-size:15.5px;padding:15px 0;list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-size:22px;font-weight:300;color:var(--ink-3);flex:none;transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{color:var(--ink-2);font-size:14.5px;padding:0 0 16px;margin:0}
+.faq summary:focus-visible{outline:3px solid var(--cyan);outline-offset:2px;border-radius:8px}
 .skip{position:absolute;left:-9999px;top:8px;background:#000;color:#fff;padding:10px 16px;border-radius:8px;z-index:200;font-weight:600;text-decoration:none}
 .skip:focus{left:12px;outline:3px solid #00d4ff;outline-offset:2px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -328,16 +420,17 @@ section>.wrap{position:relative;z-index:2}
 <nav aria-label="Hauptnavigation"><div class="nav-in">
   <a href="#" class="logo-img"><img src="/ezelero-logo.webp" width="320" height="96" alt="Ezelero" decoding="async"></a>
   <div class="nav-links" id="navmenu">
-    <a href="#leistungen">Leistungen</a><a href="#branche">Branchen</a><a href="#ablauf">Ablauf</a><a href="#warum">Warum Ezelero</a><a href="ki-buero-simulator.html">Simulator</a>
+    <a href="#leistungen">Leistungen</a><a href="#branche">Branchen</a><a href="#ablauf">Ablauf</a><a href="#preise">Preise</a><a href="#faq">FAQ</a><a href="ki-buero-simulator.html">Simulator</a>
   </div>
   <span class="nav-micro" aria-hidden="true">Kostenlos · Unverbindlich</span>
-  <a class="nav-cta" href="https://calendly.com/ezelero/diagnostico-gratis" target="_blank" rel="noopener"><span class="nc-long">Kostenlose Erstanalyse</span><span class="nc-short">Erstanalyse</span></a>
+  <a class="nav-cta" href="#anfrage"><span class="nc-long">Kostenlose Erstanalyse</span><span class="nc-short">Erstanalyse</span></a>
   <button class="theme-toggle" id="themeBtn" type="button" aria-label="Farbschema umschalten">🌙</button>
     <button class="nav-burger" id="navburger" aria-label="Menü"><span></span><span></span><span></span></button>
 </div></nav>
 
 <!-- HERO -->
 <header class="hero" id="main" tabindex="-1"><div class="hero-fx" aria-hidden="true"><span class="blob1"></span><span class="blob2"></span><span class="blob3"></span></div><div class="wrap">
+  <div class="hero-grid"><div class="hero-copy">
   <div class="src-hi" id="srcHi" hidden aria-live="polite"></div>
   <div class="eyebrow">KI für kleine und mittlere Unternehmen</div>
   <h1>Ihr Team versinkt in Anfragen, Angeboten und Papierkram.</h1>
@@ -349,6 +442,42 @@ section>.wrap{position:relative;z-index:2}
   </div>
   <div class="note">Kostenlose Erstanalyse, unverbindlich · Festpreis, keine Vertragsbindung</div>
   <div class="safe"><span>Terminbuchung verschlüsselt über Calendly</span><span>Keine Weitergabe Ihrer Daten</span><span>Absage jederzeit möglich</span></div>
+  </div>
+  <aside class="hero-form" id="anfrage" aria-labelledby="hfTitle">
+    <h2 id="hfTitle">Erstanalyse anfragen</h2>
+    <p class="sub">45 Minuten, kostenlos und unverbindlich. Antwort innerhalb eines Werktages.</p>
+    <div class="q" id="hfQ">Worum geht es?</div>
+    <div class="topics" id="topics" role="group" aria-labelledby="hfQ">
+      <button type="button" data-t="Noch unklar, wir suchen Orientierung">Noch unklar, wir suchen Orientierung</button>
+      <button type="button" data-t="Wiederkehrende Aufgaben automatisieren">Wiederkehrende Aufgaben automatisieren</button>
+      <button type="button" data-t="Kundenanfragen automatisch beantworten">Kundenanfragen automatisch beantworten</button>
+      <button type="button" data-t="Angebote schneller erstellen">Angebote schneller erstellen</button>
+      <button type="button" data-t="Betriebswissen für alle zugänglich machen">Betriebswissen für alle zugänglich machen</button>
+      <button type="button" data-t="Mitarbeiter schulen">Mitarbeiter schulen</button>
+    </div>
+    <form id="hf" novalidate>
+      <div class="frow">
+        <div><label for="hfName">Name</label><input id="hfName" name="name" autocomplete="name" required></div>
+        <div><label for="hfFirma">Betrieb <em>(optional)</em></label><input id="hfFirma" name="firma" autocomplete="organization"></div>
+      </div>
+      <div class="frow">
+        <div><label for="hfMail">E-Mail</label><input id="hfMail" name="email" type="email" autocomplete="email" required></div>
+        <div><label for="hfTel">Telefon <em>(optional)</em></label><input id="hfTel" name="telefon" type="tel" autocomplete="tel"></div>
+      </div>
+      <button class="btn btn-primary" type="submit">Termin auswählen →</button>
+      <div class="ok" id="hfOk" aria-live="polite">Danke! Der Terminkalender öffnet sich in einem neuen Fenster – Ihre Angaben sind dort schon eingetragen.</div>
+      <p class="fine">Ihre Angaben werden nur für die Terminvereinbarung verwendet und nicht weitergegeben.</p>
+    </form>
+    <div class="or">oder</div>
+    <form id="cf" novalidate>
+      <div class="q" style="margin-top:0">Lieber zurückgerufen werden?</div>
+      <div class="cb"><label class="sr-only" for="cfName">Name</label><input id="cfName" name="name" placeholder="Name *" autocomplete="name" required><label class="sr-only" for="cfTel">Telefon</label><input id="cfTel" name="telefon" type="tel" placeholder="Telefon *" autocomplete="tel" required></div>
+      <div class="f1" style="margin-top:8px"><label class="sr-only" for="cfWas">Worum geht es</label><input id="cfWas" name="thema" placeholder="Worum geht es? (optional)"></div>
+      <button class="btn btn-dark2" type="submit">Rückruf anfordern</button>
+      <div class="ok" id="cfOk" aria-live="polite">Danke – wir rufen Sie innerhalb eines Werktages zurück.</div>
+    </form>
+  </aside>
+  </div>
     <div class="hero-photo reveal"><img src="/suedtirol-meeting.webp" srcset="/suedtirol-meeting-800.webp 800w, /suedtirol-meeting.webp 1400w" sizes="(max-width: 720px) 100vw, 1000px" width="1400" height="787" fetchpriority="high" decoding="async" alt="Team im Meeting mit Blick auf die Berge"></div>
   <div class="trust reveal" aria-label="Vertrauensmerkmale">
     <span><i>✓</i>Gründer mit über zwanzig Jahren Unternehmer-Erfahrung</span>
@@ -369,6 +498,19 @@ section>.wrap{position:relative;z-index:2}
     <div class="card reveal tilt"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h3>Erkennen</h3><p>Wir identifizieren Anfragen, Chancen, offene Aufgaben und Prozesse, die Aufmerksamkeit brauchen.</p></div>
     <div class="card reveal tilt"><div class="ic"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><h3>Aktivieren</h3><p>Die Information erreicht automatisch die richtige Person — sofort handlungsbereit.</p></div>
     <div class="card reveal tilt"><div class="ic"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><h3>Messen</h3><p>Wir kontrollieren Reaktionszeiten, Nachverfolgung, Termine und Verbesserungspotenziale.</p></div>
+  </div>
+
+  <div class="fail">
+    <div class="sec-head">
+      <div class="eyebrow">Ehrlich gesagt</div>
+      <h2 class="grad hz">Woran KI-Projekte<br>in kleinen Betrieben scheitern.</h2>
+    </div>
+    <div class="fail-grid">
+      <div class="scard reveal tilt"><div class="num">1</div><h3>Zu groß gedacht</h3><p>„Wir digitalisieren alles" endet nach drei Monaten in einer Präsentation. Ein Prozess, sauber umgesetzt, schlägt zehn angefangene.</p></div>
+      <div class="scard reveal tilt"><div class="num">2</div><h3>Werkzeug vor Problem</h3><p>Erst wird ein Tool gekauft, dann gesucht, wofür. Wir gehen den anderen Weg: Erst der Zeitfresser, dann die passende Lösung.</p></div>
+      <div class="scard reveal tilt"><div class="num">3</div><h3>Niemand ist verantwortlich</h3><p>Ohne festen Ansprechpartner versandet jedes Projekt im Tagesgeschäft. Bei uns gibt es genau einen – und der bleibt.</p></div>
+    </div>
+    <p class="fail-line">Darum: ein Prozess, messbar, zum Festpreis, mit einem Ansprechpartner.</p>
   </div>
 </div></section>
 
@@ -400,6 +542,30 @@ section>.wrap{position:relative;z-index:2}
   <div class="br-result reveal" id="brResult" aria-live="polite">
     <h3 id="brTitle">Ihre Branche, Ihr Beispiel</h3>
     <p id="brText">Tippen Sie oben auf Ihre Branche – wir zeigen Ihnen sofort, wo KI bei Ihnen den größten Hebel hat.</p>
+  </div>
+</div></section>
+
+<section id="rechner"><div class="wave-top to-white" aria-hidden="true"><svg viewBox="0 0 1200 44" preserveAspectRatio="none"><path d="M0,44 C400,4 800,4 1200,44 Z"></path></svg></div><div class="wrap">
+  <div class="sec-head">
+    <div class="eyebrow">Überschlagsrechnung</div>
+    <h2 class="grad hz">Wie viel Zeit binden<br>Ihre wiederkehrenden Aufgaben?</h2>
+    <p>Vier Regler, eine Größenordnung. Kein Einsparversprechen – aber ein ehrlicher Blick darauf, wo die Stunden hingehen.</p>
+  </div>
+  <div class="calc reveal">
+    <div>
+      <div class="fld"><div class="lab"><label for="cMin">Minuten je Vorgang</label><input id="cMin" type="number" min="1" max="120" value="12"></div><input id="rMin" type="range" min="1" max="120" value="12" aria-label="Minuten je Vorgang"><small id="sMin">12 Minuten</small></div>
+      <div class="fld"><div class="lab"><label for="cNum">Vorgänge pro Monat</label><input id="cNum" type="number" min="10" max="5000" value="300"></div><input id="rNum" type="range" min="10" max="5000" step="10" value="300" aria-label="Vorgänge pro Monat"><small id="sNum">300 Vorgänge</small></div>
+      <div class="fld"><div class="lab"><label for="cPct">Routineanteil, der sich automatisieren lässt</label><input id="cPct" type="number" min="10" max="90" value="60"></div><input id="rPct" type="range" min="10" max="90" value="60" aria-label="Routineanteil in Prozent"><small id="sPct">60 %</small></div>
+      <div class="fld"><div class="lab"><label for="cRate">Interner Stundensatz in Euro</label><input id="cRate" type="number" min="15" max="200" value="45"></div><input id="rRate" type="range" min="15" max="200" value="45" aria-label="Interner Stundensatz"><small id="sRate">45 €</small></div>
+    </div>
+    <div class="calc-res" aria-live="polite">
+      <div class="sub">Gebundene Arbeitszeit</div>
+      <div class="big"><span id="oH">36</span> <small>Stunden pro Monat</small></div>
+      <div class="sub"><span id="oY">432</span> Stunden pro Jahr · Kostenäquivalent <span id="oE">19.440 €</span> pro Jahr</div>
+      <div class="verdict" id="oV">Dafür lohnt sich ein Pilot-Sprint: ein Prozess, in wenigen Wochen umgesetzt.</div>
+      <a class="btn" id="oBtn" href="#anfrage">Das im Gespräch prüfen →</a>
+      <div class="fine">Das Ergebnis ist eine Größenordnung aus Ihren Eingaben, keine Zusage. Prozesse sind zu unterschiedlich für pauschale Versprechen – deshalb beginnen wir mit einer Erstanalyse.</div>
+    </div>
   </div>
 </div></section>
 
@@ -444,6 +610,43 @@ section>.wrap{position:relative;z-index:2}
 </div></section>
 
 <!-- CTA -->
+<section class="gray" id="preise"><div class="wave-top to-gray" aria-hidden="true"><svg viewBox="0 0 1200 44" preserveAspectRatio="none"><path d="M0,44 C400,4 800,4 1200,44 Z"></path></svg></div><div class="wrap">
+  <div class="sec-head">
+    <div class="eyebrow">Transparente Preise</div>
+    <h2 class="grad hz">Drei Stufen.<br>Keine Überraschungen.</h2>
+    <p>Sie wissen vorher, was es kostet. Festpreis heißt bei uns: Der Preis steht im Angebot und ändert sich nicht.</p>
+  </div>
+  <div class="prices">
+    <div class="price reveal"><div class="kick">Stufe eins</div><h3>Erstanalyse</h3><div class="amt">0 €</div><div class="dur">45 Minuten, per Video oder Telefon</div>
+      <ul><li>Wir finden den einen Prozess, der am meisten Zeit frisst</li><li>Erste Einschätzung: Was ist machbar, was bringt es</li><li>Klare Empfehlung, ob sich ein Pilot lohnt</li><li>Keine Verpflichtung, keine Verkaufsshow</li></ul>
+      <a class="btn btn-primary" href="#anfrage">Erstanalyse anfragen</a></div>
+    <div class="price hi reveal"><div class="kick">Stufe zwei · Am häufigsten</div><h3>Pilot-Sprint</h3><div class="amt">ab 3.900 € <small>Festpreis</small></div><div class="dur">Zwei bis vier Wochen</div>
+      <ul><li>Ein Prozess, komplett umgesetzt und im Betrieb eingeführt</li><li>Schulung Ihres Teams inklusive</li><li>Messung: Zeit vorher, Zeit nachher, schwarz auf weiß</li><li>Ein Ansprechpartner von Anfang bis Ende</li></ul>
+      <a class="btn btn-primary" href="#anfrage">Mit Erstanalyse starten</a></div>
+    <div class="price reveal"><div class="kick">Stufe drei</div><h3>Begleitung</h3><div class="amt">ab 490 € <small>pro Monat</small></div><div class="dur">Monatlich kündbar</div>
+      <ul><li>Wartung und Anpassung der laufenden Automatisierung</li><li>Ausbau auf den nächsten Prozess, wenn der erste sitzt</li><li>Direkter Draht bei Fragen und Änderungen</li><li>Monatlicher Kurzbericht: Was lief, was wurde eingespart</li></ul>
+      <a class="btn btn-primary" href="#anfrage">Erstanalyse anfragen</a></div>
+  </div>
+  <div class="price-rule reveal"><strong>Unsere Preise sind fix.</strong> Reicht Ihr Budget nicht, passen wir den Umfang an – nicht den Preis. Rabatte gibt es nicht, dafür mehr Leistung.</div>
+</div></section>
+
+<section id="faq"><div class="wave-top to-white" aria-hidden="true"><svg viewBox="0 0 1200 44" preserveAspectRatio="none"><path d="M0,44 C400,4 800,4 1200,44 Z"></path></svg></div><div class="wrap">
+  <div class="sec-head">
+    <div class="eyebrow">Häufige Fragen</div>
+    <h2 class="grad hz">Was Unternehmer<br>uns zuerst fragen.</h2>
+  </div>
+  <div class="faq reveal">
+    <details><summary>Was kostet KI für einen kleinen Betrieb?</summary><p>Die Erstanalyse ist kostenlos. Ein Pilot-Sprint – ein Prozess, komplett umgesetzt – beginnt bei 3.900 Euro zum Festpreis. Die laufende Begleitung beginnt bei 490 Euro im Monat und ist monatlich kündbar. Der Preis steht vorher im Angebot und ändert sich nicht.</p></details>
+    <details><summary>Wie läuft die Erstanalyse ab?</summary><p>45 Minuten per Video oder Telefon, direkt mit dem Gründer. Wir gehen Ihren Alltag durch und suchen den einen Prozess, der am meisten Zeit kostet – meist Anfragen, Angebote oder Terminplanung. Am Ende wissen Sie, was machbar ist, was es bringt und was es kostet.</p></details>
+    <details><summary>Wie lange dauert ein Pilot-Sprint?</summary><p>Zwei bis vier Wochen, je nach Prozess und Ihren vorhandenen Werkzeugen. Am Ende läuft die Lösung in Ihrem Betrieb, Ihr Team ist eingewiesen, und wir haben gemessen, wie viel Zeit sie tatsächlich spart.</p></details>
+    <details><summary>Für welche Betriebe eignet sich das?</summary><p>Für Betriebe mit wiederkehrenden Aufgaben: Handwerk, Handel, Dienstleister, Gastronomie, Praxen. Typisch sind Anfragen per Telefon und Mail, Angebote, Terminvergabe, Bestellungen und Berichte. Die Größe spielt keine Rolle – ein Fünf-Personen-Betrieb profitiert genauso wie einer mit fünfzig.</p></details>
+    <details><summary>Brauche ich technisches Wissen oder eine IT-Abteilung?</summary><p>Nein. Wir bauen die Lösung auf dem auf, was Sie schon nutzen – Telefon, E-Mail, Ihre bestehende Software. Ihr Team wird geschult, und Sie haben einen Ansprechpartner, der bleibt.</p></details>
+    <details><summary>Was passiert mit unseren Daten?</summary><p>Vor dem Projekt legen wir gemeinsam fest, welche Daten die Lösung sieht und welche nicht. Ihre Kundendaten werden nicht weitergegeben und nicht zum Trainieren fremder Systeme verwendet. Wo möglich, arbeiten wir mit europäischen Anbietern.</p></details>
+    <details><summary>Ersetzt die KI meine Mitarbeiter?</summary><p>Nein, und das ist Absicht. Die KI übernimmt die Routine – das Abtippen, Weiterleiten, Nachfragen. Ihre Leute bekommen Zeit für das, was Kunden tatsächlich bezahlen. Wir werben nie damit, Personal einzusparen.</p></details>
+    <details><summary>Was, wenn es bei uns nicht funktioniert?</summary><p>Dafür gibt es die Messphase: Wir vergleichen Zeit vorher und nachher. Erst wenn der erste Prozess nachweislich Zeit spart, gehen wir den nächsten an. Und weil der Preis fix ist, tragen Sie kein Risiko für Nachträge.</p></details>
+  </div>
+</div></section>
+
 <section><div class="wrap">
   <div class="cta-final reveal">
     <h2>Ihr Unternehmen im Autopilot-Modus.</h2>
@@ -470,7 +673,7 @@ section>.wrap{position:relative;z-index:2}
 <footer><div class="wrap">
   <a href="#" class="logo-img"><img src="/ezelero-logo.webp" width="320" height="96" alt="Ezelero" decoding="async"></a>
   <div>Praktische Künstliche Intelligenz und Automatisierung für den Mittelstand.</div>
-  <div class="fl"><a href="#ansatz">Ansatz</a><a href="#leistungen">Leistungen</a><a href="#ablauf">Ablauf</a><a href="mailto:info@ezelero.com">Kontakt</a></div>
+  <div class="fl"><a href="#preise">Preise</a><a href="#leistungen">Leistungen</a><a href="#ablauf">Ablauf</a><a href="mailto:info@ezelero.com">Kontakt</a></div>
   <div><b>E-Mail:</b> <button type="button" class="copy-mail" data-mail="info@ezelero.com">info@ezelero.com</button><span class="sr-only" id="copyLive" aria-live="polite"></span> · ezelero.com</div>
 </div></footer>
 
@@ -494,6 +697,32 @@ window.addEventListener('scroll',function(){var st=document.documentElement.scro
   (function(){var wrap=document.querySelector('.hero-photo'),img=wrap&&wrap.querySelector('img');if(!img||RM)return;var t=false;
     function upd(){var r=wrap.getBoundingClientRect(),vh=window.innerHeight||1;var p=(vh-r.top)/(vh+r.height);p=p<0?0:p>1?1:p;img.style.transform='scale('+(1+0.08*p).toFixed(4)+')';t=false;}
     addEventListener('scroll',function(){if(!t){t=true;requestAnimationFrame(upd);}},{passive:true});addEventListener('resize',upd);upd();})();
+  // 2a) Hero-Formular: Pillen + Calendly-Vorbefüllung + Rückruf (Formspree, sonst Mail-App)
+  (function(){var FORM_ID='';var topic='';var tp=document.getElementById('topics');if(!tp)return;
+    tp.addEventListener('click',function(e){var b=e.target.closest('[data-t]');if(!b)return;var on=b.classList.contains('on');[].forEach.call(tp.children,function(x){x.classList.remove('on');x.setAttribute('aria-pressed','false');});if(!on){b.classList.add('on');b.setAttribute('aria-pressed','true');topic=b.getAttribute('data-t');}else topic='';});
+    [].forEach.call(tp.children,function(x){x.setAttribute('aria-pressed','false');});
+    function send(data){if(!FORM_ID)return Promise.resolve(false);return fetch('https://formspree.io/f/'+FORM_ID,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},body:JSON.stringify(data)}).then(function(r){return r.ok;}).catch(function(){return false;});}
+    function need(el){if(!el.value.trim()||(el.type==='email'&&el.validity&&!el.validity.valid)){el.focus();el.style.borderColor='#b0243c';setTimeout(function(){el.style.borderColor='';},1800);return false;}return true;}
+    var hf=document.getElementById('hf');hf.addEventListener('submit',function(e){e.preventDefault();var nm=document.getElementById('hfName'),em=document.getElementById('hfMail');if(!need(nm)||!need(em))return;
+      var firma=document.getElementById('hfFirma').value.trim(),tel=document.getElementById('hfTel').value.trim();
+      var base=(document.querySelector('.hero a.btn-primary[href*="calendly"]')||{}).getAttribute?document.querySelector('.hero a.btn-primary[href*="calendly"]').getAttribute('href'):'https://calendly.com/ezelero/diagnostico-gratis';
+      var u=base+(base.indexOf('?')>0?'&':'?')+'name='+encodeURIComponent(nm.value.trim())+'&email='+encodeURIComponent(em.value.trim())+(topic?'&a1='+encodeURIComponent(topic+(firma?' – '+firma:'')):'');
+      send({art:'Erstanalyse-Anfrage',name:nm.value.trim(),firma:firma,email:em.value.trim(),telefon:tel,thema:topic,quelle:location.href});
+      window.open(u,'_blank','noopener');document.getElementById('hfOk').classList.add('show');});
+    var cf=document.getElementById('cf');cf.addEventListener('submit',function(e){e.preventDefault();var nm=document.getElementById('cfName'),tl=document.getElementById('cfTel');if(!need(nm)||!need(tl))return;
+      var was=document.getElementById('cfWas').value.trim(),btn=cf.querySelector('button');btn.disabled=true;btn.textContent='Wird gesendet …';
+      send({art:'Rückruf',name:nm.value.trim(),telefon:tl.value.trim(),thema:was||topic,quelle:location.href}).then(function(ok){
+        if(ok){document.getElementById('cfOk').classList.add('show');btn.textContent='Gesendet ✓';}
+        else{location.href='mailto:info@ezelero.com?subject='+encodeURIComponent('Rückruf: '+nm.value.trim())+'&body='+encodeURIComponent('Name: '+nm.value.trim()+'\nTelefon: '+tl.value.trim()+'\nWorum geht es: '+(was||topic||'–'));btn.disabled=false;btn.textContent='Rückruf anfordern';document.getElementById('cfOk').textContent='Ihr Mail-Programm öffnet sich mit der Anfrage – bitte absenden.';document.getElementById('cfOk').classList.add('show');}});});
+  })();
+  // 2c) Überschlagsrechner
+  (function(){var ids=['Min','Num','Pct','Rate'];var el={};ids.forEach(function(k){el['c'+k]=document.getElementById('c'+k);el['r'+k]=document.getElementById('r'+k);el['s'+k]=document.getElementById('s'+k);});if(!el.cMin)return;
+    function fmtE(n){return Math.round(n).toLocaleString('de-DE')+' €';}
+    function calc(){var m=+el.cMin.value,n=+el.cNum.value,p=+el.cPct.value,r=+el.cRate.value;var hM=m*n/60*p/100,hY=hM*12,e=hY*r;
+      document.getElementById('oH').textContent=Math.round(hM).toLocaleString('de-DE');document.getElementById('oY').textContent=Math.round(hY).toLocaleString('de-DE');document.getElementById('oE').textContent=fmtE(e);
+      el.sMin.textContent=m+' Minuten';el.sNum.textContent=n.toLocaleString('de-DE')+' Vorgänge';el.sPct.textContent=p+' %';el.sRate.textContent=r+' €';
+      var v=document.getElementById('oV');v.textContent=hM<15?'Überschaubar. Ein Erstgespräch zeigt, ob sich hier trotzdem ein Handgriff lohnt.':hM<50?'Dafür lohnt sich ein Pilot-Sprint: ein Prozess, in wenigen Wochen umgesetzt.':'Hier läuft jeden Monat eine volle Arbeitswoche weg. Ein Pilot-Sprint hat sich meist im ersten Quartal bezahlt.';}
+    ids.forEach(function(k){el['r'+k].addEventListener('input',function(){el['c'+k].value=this.value;calc();});el['c'+k].addEventListener('input',function(){var v=Math.max(+this.min,Math.min(+this.max,+this.value||+this.min));el['r'+k].value=v;calc();});});calc();})();
   // 2b) 3D-Neigung der Karten (nur bei Maus, ohne Bibliothek)
   (function(){if(RM||!matchMedia('(pointer:fine)').matches)return;
     document.querySelectorAll('.tilt').forEach(function(c){var raf=false,lx=0,ly=0;
